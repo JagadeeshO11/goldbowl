@@ -8,10 +8,13 @@ import { CustomerPage } from '../pages/customer/CustomerPage'
 import { DeliveryPage } from '../pages/delivery/DeliveryPage'
 import { AdminPage } from '../pages/admin/AdminPage'
 import { SupportPageV3 } from '../pages/support/SupportPageV3'
+import { AuthPage, DeliveryOnboardingPage } from '../pages/auth/AuthPage'
 
 export function AppRouter() {
   return <Routes>
     <Route path="/" element={<PrototypeHome />} />
+    <Route path="/customer/auth" element={<AuthPage />} />
+    <Route path="/delivery/onboarding" element={<DeliveryOnboardingPage />} />
     <Route path="/customer" element={<CustomerLayout />}><Route index element={<Navigate to="home" replace />} /><Route path="*" element={<CustomerPage />} /></Route>
     <Route path="/delivery" element={<DeliveryLayout />}><Route index element={<Navigate to="dashboard" replace />} /><Route path="*" element={<DeliveryPage />} /></Route>
     <Route path="/admin" element={<AdminLayout />}><Route index element={<Navigate to="dashboard" replace />} /><Route path="*" element={<AdminPage />} /></Route>
