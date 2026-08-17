@@ -1,0 +1,64 @@
+/* Desktop prototype: the phone is the viewport, not the laptop. */
+.mobile-shell {
+  position: relative !important;
+  height: min(820px, calc(100dvh - 120px)) !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  margin: 28px auto !important;
+}
+
+.mobile-content {
+  height: calc(100% - 68px) !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding-bottom: 92px !important;
+  box-sizing: border-box !important;
+  scrollbar-width: none;
+}
+
+.mobile-content::-webkit-scrollbar {
+  display: none;
+}
+
+.bottom-nav {
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  transform: none !important;
+  width: 100% !important;
+  max-width: none !important;
+  height: 76px !important;
+  box-sizing: border-box !important;
+}
+
+.floating-cart {
+  position: absolute !important;
+  left: 15px !important;
+  right: 15px !important;
+  bottom: 88px !important;
+  width: auto !important;
+  transform: none !important;
+  box-sizing: border-box !important;
+}
+
+.sticky-add {
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  transform: none !important;
+  box-sizing: border-box !important;
+}
+
+@media (max-width: 600px) {
+  .mobile-shell {
+    width: 100% !important;
+    max-width: none !important;
+    height: 100dvh !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+  }
+}
