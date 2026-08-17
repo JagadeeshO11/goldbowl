@@ -6,11 +6,14 @@ import './App.css'
 import './mobile-prototype.css'
 import './route-prototype.css'
 import { AppRouter } from './app/AppRouter.jsx'
+import { PrototypeProvider } from './context/PrototypeContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <AppRouter />
+      <PrototypeProvider>
+        <AppRouter />
+      </PrototypeProvider>
     </BrowserRouter>
   </StrictMode>,
 )
