@@ -9,7 +9,8 @@ import { DeliveryPage } from '../pages/delivery/DeliveryPage'
 import { AdminPage } from '../pages/admin/AdminPage'
 import { SupportPageV3 } from '../pages/support/SupportPageV3'
 import { AuthPage, DeliveryOnboardingPage } from '../pages/auth/AuthPage'
-import { CustomerSignUpPage, CustomerSignInPage, CustomerVerifyOtpPage, CustomerForgotPasswordPage, DeliverySignUpPage, DeliverySignInPage, DeliveryVerificationPage, DeliveryFeePage, DeliveryApplicationSubmittedPage } from '../pages/auth/AuthPages'
+import { CustomerSignUpPage, CustomerSignInPage, CustomerVerifyOtpPage, CustomerForgotPasswordPage, CustomerLocationPage, DeliverySignUpPage, DeliverySignInPage, DeliveryVerificationPage, DeliveryFeePage, DeliveryApplicationSubmittedPage } from '../pages/auth/AuthPages'
+import { DeliveryLocationPage } from '../pages/auth/DeliveryLocationPage'
 
 export function AppRouter() {
   return <Routes>
@@ -19,11 +20,13 @@ export function AppRouter() {
     <Route path="/customer/signup" element={<CustomerSignUpPage />} />
     <Route path="/customer/verify-otp" element={<CustomerVerifyOtpPage />} />
     <Route path="/customer/forgot-password" element={<CustomerForgotPasswordPage />} />
+    <Route path="/customer/location" element={<CustomerLocationPage />} />
     <Route path="/delivery/onboarding" element={<Navigate to="/delivery/signup" replace />} />
     <Route path="/delivery/signin" element={<DeliverySignInPage />} />
     <Route path="/delivery/signup" element={<DeliverySignUpPage />} />
     <Route path="/delivery/verification" element={<DeliveryVerificationPage />} />
-    <Route path="/delivery/onboarding-fee" element={<DeliveryFeePage />} />
+    <Route path="/delivery/onboarding-fee" element={<DeliveryLocationPage />} />
+    <Route path="/delivery/onboarding-fee/payment" element={<DeliveryFeePage />} />
     <Route path="/delivery/application-submitted" element={<DeliveryApplicationSubmittedPage />} />
     <Route path="/customer" element={<CustomerLayout />}><Route index element={<Navigate to="home" replace />} /><Route path="*" element={<CustomerPage />} /></Route>
     <Route path="/delivery" element={<DeliveryLayout />}><Route index element={<Navigate to="dashboard" replace />} /><Route path="*" element={<DeliveryPage />} /></Route>
