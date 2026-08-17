@@ -1,11 +1,9 @@
 import { initialOrders, branches, products, categories } from '../data/mockData'
-
 const STORAGE_KEY = 'goldbowl-prototype-state'
-const defaultState = { orders: initialOrders, branches, products, categories, notifications: [{ id: 'n1', role: 'customer', title: 'Welcome to Golden Food Bowl', message: 'Your next delicious order is only a few taps away.' }], issues: [] }
+const defaultState = { orders: initialOrders, branches, products, categories, notifications: [{ id: 'n1', role: 'customer', title: 'Welcome to Golden Food Bowl', message: 'Your next delicious order is only a few taps away.' }], issues: [], users: [], deliveryPartners: [] }
 function clone(value) { return JSON.parse(JSON.stringify(value)) }
 function loadState() { try { const saved = localStorage.getItem(STORAGE_KEY); return saved ? JSON.parse(saved) : clone(defaultState) } catch { return clone(defaultState) } }
-let state = loadState()
-const listeners = new Set()
+let state = loadState(); const listeners = new Set()
 function persist() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); listeners.forEach((listener) => listener(state)) }
 export const orderStatuses = ['CONFIRMED','PREPARING','READY_FOR_PICKUP','ASSIGNED','PICKED_UP','OUT_FOR_DELIVERY','DELIVERED']
 export function getState() { return state }
@@ -18,7 +16,10 @@ export function duplicateBranch(sourceId, newBranch) { const source = state.bran
 export function addProduct(product) { const id = Math.max(...state.products.map((item) => Number(item.id)), 0) + 1; const item = { id, rating: 4.5, available: true, ingredients: [], ...product }; state = { ...state, products: [...state.products, item] }; addNotification('support','Product added',`${item.name} was added to the menu.`); persist(); return item }
 export function updateProduct(productId, changes) { state = { ...state, products: state.products.map((item) => Number(item.id) === Number(productId) ? { ...item, ...changes } : item) }; persist() }
 export function toggleProductAvailability(productId) { const item = state.products.find((product) => Number(product.id) === Number(productId)); if (item) updateProduct(productId, { available: !item.available }) }
-export function addCategory(category) { const id = category.id || category.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'); state = { ...state, categories: [...state.categories, { ...category, id }] }; persist() }
+export function addCategory(category) { const id = category.id || category.name.toLowerCase().replace(/[^a-z0-9]+/g, '-'); state = { ...state, categories: [...state.categories, { ...category, id }] }; persist(); return id }
 export function addIssue(issue) { state = { ...state, issues: [{ id: crypto.randomUUID(), status: 'OPEN', createdAt: new Date().toISOString(), ...issue }, ...state.issues] }; persist() }
 export function updateIssue(issueId, status) { state = { ...state, issues: state.issues.map((issue) => issue.id === issueId ? { ...issue, status } : issue) }; persist() }
+export function registerCustomer({ name, mobile, email = '', provider = 'mobile' }) { const user = { id: crypto.randomUUID(), role: 'customer', name, mobile, email, provider, createdAt: new Date().toISOString() }; state = { ...state, users: [user, ...state.users] }; persist(); return user }
+export function registerDeliveryPartner(profile) { const partner = { id: crypto.randomUUID(), role: 'delivery', verificationStatus: 'PENDING', fee: 499, feeStatus: 'PENDING', createdAt: new Date().toISOString(), ...profile }; state = { ...state, deliveryPartners: [partner, ...state.deliveryPartners] }; addNotification('admin', 'Delivery onboarding submitted', `${partner.name} submitted a partner application.`); persist(); return partner }
+export function updateDeliveryVerification(id, verificationStatus, feeStatus = 'PAID') { state = { ...state, deliveryPartners: state.deliveryPartners.map((p) => p.id === id ? { ...p, verificationStatus, feeStatus } : p) }; persist() }
 export function resetPrototypeState() { state = clone(defaultState); persist() }
