@@ -1,5 +1,5 @@
-/* Golden Food Bowl prototype device frame
-   Customer and delivery screens behave like real mobile apps when viewed on desktop. */
+/* Golden Food Bowl mobile device presentation.
+   Customer and Delivery screens stay inside the simulated phone on desktop. */
 
 html, body, #root {
   min-height: 100%;
@@ -11,7 +11,9 @@ body {
 }
 
 @media (min-width: 701px) {
-  .mobile-shell {
+  .mobile-shell,
+  .delivery-app {
+    position: relative !important;
     width: 390px !important;
     max-width: 390px !important;
     height: min(844px, calc(100vh - 40px)) !important;
@@ -19,10 +21,13 @@ body {
     margin: 20px auto !important;
     border-radius: 32px !important;
     overflow: hidden !important;
+    box-sizing: border-box !important;
     box-shadow: 0 22px 70px rgba(37, 34, 29, .25), 0 0 0 8px #26231f !important;
+    isolation: isolate;
   }
 
-  .mobile-shell::before {
+  .mobile-shell::before,
+  .delivery-app::before {
     content: '';
     position: absolute;
     top: 8px;
@@ -32,16 +37,26 @@ body {
     height: 22px;
     border-radius: 20px;
     background: #26231f;
-    z-index: 50;
+    z-index: 100;
     pointer-events: none;
+  }
+
+  .mobile-header {
+    position: relative !important;
+    z-index: 30 !important;
+    height: 68px !important;
+    min-height: 68px !important;
+    box-sizing: border-box;
   }
 
   .mobile-content {
     height: calc(100% - 68px - 76px) !important;
+    min-height: 0 !important;
     overflow-y: auto !important;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
+    box-sizing: border-box;
   }
 
   .mobile-content::-webkit-scrollbar {
@@ -53,58 +68,49 @@ body {
     border-radius: 10px;
   }
 
-  .mobile-header {
-    flex: 0 0 68px;
-    position: relative !important;
-    z-index: 30;
-  }
-
-  .bottom-nav {
+  /* Critical: nav is anchored to the phone, never to the laptop viewport. */
+  .mobile-shell > .bottom-nav,
+  .delivery-app > .bottom-nav {
     position: absolute !important;
     left: 0 !important;
+    right: 0 !important;
     bottom: 0 !important;
-    transform: none !important;
     width: 100% !important;
-    z-index: 40 !important;
+    max-width: none !important;
+    margin: 0 !important;
+    transform: none !important;
+    z-index: 90 !important;
+    box-sizing: border-box !important;
   }
 
-  .floating-cart {
+  .mobile-shell > .floating-cart {
     position: absolute !important;
     left: 50% !important;
     bottom: 88px !important;
-    z-index: 35 !important;
+    z-index: 80 !important;
   }
 
-  .sticky-add {
+  .mobile-shell .sticky-add {
     position: absolute !important;
     left: 0 !important;
-    bottom: 0 !important;
-    transform: none !important;
+    right: 0 !important;
+    bottom: 76px !important;
     width: 100% !important;
-    box-sizing: border-box;
-    z-index: 45 !important;
+    max-width: none !important;
+    transform: none !important;
+    box-sizing: border-box !important;
+    z-index: 85 !important;
   }
 
   .mobile-shell:has(.sticky-add) .mobile-content {
-    padding-bottom: 90px;
-  }
-
-  .delivery-app {
-    width: 390px;
-    max-width: 390px;
-    height: min(844px, calc(100vh - 40px));
-    min-height: 0;
-    margin: 20px auto;
-    border-radius: 32px;
-    overflow: hidden;
-    box-shadow: 0 22px 70px rgba(37, 34, 29, .25), 0 0 0 8px #26231f;
-    position: relative;
+    padding-bottom: 90px !important;
   }
 
   .delivery-app main {
-    height: calc(100% - 70px);
+    height: calc(100% - 70px) !important;
+    min-height: 0 !important;
     box-sizing: border-box;
-    overflow-y: auto;
+    overflow-y: auto !important;
     overscroll-behavior: contain;
   }
 }
@@ -114,13 +120,16 @@ body {
     background: #fff;
   }
 
-  .mobile-shell {
+  .mobile-shell,
+  .delivery-app {
+    position: relative;
     width: 100%;
     max-width: none;
     min-height: 100dvh;
     margin: 0;
     border-radius: 0;
     box-shadow: none;
+    overflow: hidden;
   }
 
   .mobile-content {
