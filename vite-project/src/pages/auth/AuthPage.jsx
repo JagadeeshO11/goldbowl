@@ -1,7 +1,11 @@
 import { useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
-import { ArrowLeft, Mail, Phone, UserRound, Chrome, ShieldCheck, CreditCard } from 'lucide-react'
+import { ArrowLeft, Mail, Phone, UserRound, ShieldCheck, CreditCard } from 'lucide-react'
 import { registerCustomer, registerDeliveryPartner } from '../../services/prototypeStore'
+
+function GoogleIcon() {
+  return <span aria-hidden="true" style={{ fontWeight: 800, fontSize: 18 }}>G</span>
+}
 
 export function AuthPage() {
   const navigate = useNavigate()
@@ -23,7 +27,7 @@ export function AuthPage() {
     registerCustomer({ name: name.trim() || `${provider} Customer`, mobile: mobile || '9999999999', email, provider })
     navigate('/customer/home')
   }
-  return <main className="auth-screen"><form className="auth-card" onSubmit={submit}><Link to="/" className="auth-back"><ArrowLeft/> Back</Link><div className="auth-brand">🥣<span>GOLDEN FOOD BOWL</span></div><span className="eyebrow">CUSTOMER ACCOUNT</span><h1>{mode === 'signup' ? 'Welcome to Bowl' : 'Welcome back'}</h1><p>{mode === 'signup' ? 'Create your account and start ordering fresh bowls.' : 'Sign in to continue your Bowl journey.'}</p>{mode === 'signup' && <label><UserRound/>Full name<input value={name} onChange={e => setName(e.target.value)} placeholder="Enter your name" required/></label>}<label><Phone/>Mobile number<input value={mobile} onChange={e => setMobile(e.target.value)} placeholder="10-digit mobile number" inputMode="numeric" maxLength={10} required/></label>{mode === 'signup' && <label><Mail/>Email <small>optional</small><input value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" type="email"/></label>}<button className="auth-primary" type="submit">{mode === 'signup' ? 'Create account' : 'Send OTP'}</button><div className="auth-divider"><span>or continue with</span></div><button type="button" className="auth-social" onClick={() => social('google')}><Chrome/> Continue with Google</button><button type="button" className="auth-social" onClick={() => social('email')}><Mail/> Continue with Email</button><button type="button" className="auth-switch" onClick={() => setMode(mode === 'signup' ? 'signin' : 'signup')}>{mode === 'signup' ? 'Already have an account? Sign in' : 'New to Bowl? Create an account'}</button></form></main>
+  return <main className="auth-screen"><form className="auth-card" onSubmit={submit}><Link to="/" className="auth-back"><ArrowLeft/> Back</Link><div className="auth-brand">🥣<span>GOLDEN FOOD BOWL</span></div><span className="eyebrow">CUSTOMER ACCOUNT</span><h1>{mode === 'signup' ? 'Welcome to Bowl' : 'Welcome back'}</h1><p>{mode === 'signup' ? 'Create your account and start ordering fresh bowls.' : 'Sign in to continue your Bowl journey.'}</p>{mode === 'signup' && <label><UserRound/>Full name<input value={name} onChange={e => setName(e.target.value)} placeholder="Enter your name" required/></label>}<label><Phone/>Mobile number<input value={mobile} onChange={e => setMobile(e.target.value)} placeholder="10-digit mobile number" inputMode="numeric" maxLength={10} required/></label>{mode === 'signup' && <label><Mail/>Email <small>optional</small><input value={email} onChange={e => setEmail(e.target.value)} placeholder="you@example.com" type="email"/></label>}<button className="auth-primary" type="submit">{mode === 'signup' ? 'Create account' : 'Send OTP'}</button><div className="auth-divider"><span>or continue with</span></div><button type="button" className="auth-social" onClick={() => social('google')}><GoogleIcon/> Continue with Google</button><button type="button" className="auth-social" onClick={() => social('email')}><Mail/> Continue with Email</button><button type="button" className="auth-switch" onClick={() => setMode(mode === 'signup' ? 'signin' : 'signup')}>{mode === 'signup' ? 'Already have an account? Sign in' : 'New to Bowl? Create an account'}</button></form></main>
 }
 
 export function DeliveryOnboardingPage() {
