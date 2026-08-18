@@ -7,26 +7,12 @@ const phoneShellFix = `
   .mobile-prototype-frame .mobile-route-content { position: relative !important; flex: 1 1 auto !important; min-height: 0 !important; height: auto !important; overflow-y: auto !important; overflow-x: hidden !important; padding-bottom: 0 !important; }
   .mobile-prototype-frame .mobile-app-shell > .bottom-nav { position: relative !important; inset: auto !important; transform: none !important; left: auto !important; right: auto !important; top: auto !important; bottom: auto !important; width: 100% !important; max-width: none !important; height: 72px !important; min-height: 72px !important; flex: 0 0 72px !important; z-index: 30 !important; }
   .mobile-prototype-frame .mobile-app-shell > .bottom-nav a { flex: 1 1 0 !important; min-width: 0 !important; }
-  .customer-mobile-brand { display:flex; align-items:center; gap:9px; min-width:0; }
-  .customer-mobile-brand img { width:38px; height:38px; object-fit:contain; display:block; flex:0 0 38px; }
-  .customer-mobile-brand div { display:flex; flex-direction:column; line-height:1.05; }
-  .customer-mobile-brand strong { font-size:13px; font-weight:900; color:#29251f; }
-  .customer-mobile-brand small { margin-top:3px; font-size:7px; letter-spacing:1.6px; color:#9d731d; font-weight:800; }
+  .mobile-prototype-frame .route-mobile-header { position: relative !important; }
+  .mobile-prototype-frame .route-mobile-header::before { content: ''; display: block; width: 40px; height: 40px; flex: 0 0 40px; margin-right: 2px; background-image: url('${LOGO_URL}'); background-repeat: no-repeat; background-position: center; background-size: contain; }
   @media (max-width: 600px) { .mobile-prototype-frame .mobile-app-shell { width: 100% !important; height: 100dvh !important; max-height: none !important; border: 0 !important; border-radius: 0 !important; } }
 `
 
 export function CustomerLayout() {
   const links = [['home', 'Home', Home], ['search', 'Search', Search], ['orders', 'Orders', Package], ['profile', 'Profile', User]]
-  return (
-    <div className="mobile-prototype-frame">
-      <style>{phoneShellFix}</style>
-      <div className="mobile-app-shell">
-        <header className="customer-mobile-brand"><img src={LOGO_URL} alt="Golden Bowl" /><div><strong>Golden Food</strong><small>GOLDEN BOWL</small></div></header>
-        <main className="mobile-route-content"><Outlet /></main>
-        <nav className="bottom-nav">
-          {links.map(([to, label, Icon]) => <NavLink key={to} to={`/customer/${to}`} className={({ isActive }) => isActive ? 'active' : ''}><Icon size={20} /><span>{label}</span></NavLink>)}
-        </nav>
-      </div>
-    </div>
-  )
+  return <div className="mobile-prototype-frame"><style>{phoneShellFix}</style><div className="mobile-app-shell"><main className="mobile-route-content"><Outlet /></main><nav className="bottom-nav">{links.map(([to, label, Icon]) => <NavLink key={to} to={`/customer/${to}`} className={({ isActive }) => isActive ? 'active' : ''}><Icon size={20} /><span>{label}</span></NavLink>)}</nav></div></div>
 }
