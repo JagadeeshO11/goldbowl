@@ -8,7 +8,7 @@ import { CustomerPage } from '../pages/customer/CustomerPage'
 import { DeliveryPage } from '../pages/delivery/DeliveryPage'
 import { AdminPage } from '../pages/admin/AdminPage'
 import { SupportPageV3 } from '../pages/support/SupportPageV3'
-import { CustomerSignUpPage, CustomerSignInPage, CustomerVerifyOtpPage, CustomerForgotPasswordPage, CustomerLocationPage, DeliverySignUpPage, DeliverySignInPage, DeliveryVerificationPage, DeliveryFeePage, DeliveryApplicationSubmittedPage } from '../pages/auth/AuthPages'
+import { CustomerSignUpPage, CustomerSignInPage, CustomerVerifyOtpPage, CustomerForgotPasswordPage, CustomerLocationPage, DeliverySignUpPage, DeliveryVerificationPage, DeliveryFeePage, DeliveryApplicationSubmittedPage } from '../pages/auth/AuthPages'
 import { DeliveryPartnerSignInPage } from '../pages/auth/DeliveryPartnerSignInPage'
 import { DeliveryLocationPage } from '../pages/auth/DeliveryLocationPage'
 import { CustomerAuthGuard, DeliveryAuthGuard } from './AuthGuard'
@@ -32,7 +32,7 @@ export function AppRouter() {
     <Route path="/delivery/application-submitted" element={<DeliveryApplicationSubmittedPage />} />
     <Route path="/delivery" element={<DeliveryAuthGuard />}><Route element={<DeliveryLayout />}><Route index element={<Navigate to="dashboard" replace />} /><Route path="*" element={<DeliveryPage />} /></Route></Route>
     <Route path="/admin" element={<AdminLayout />}><Route index element={<Navigate to="dashboard" replace />} /><Route path="*" element={<AdminPage />} /></Route>
-    <Route path="/support" element={<SupportLayout />}><Route index element={<Navigate to="dashboard" replace" />} /><Route path="*" element={<SupportPageV3 />} /></Route>
-    <Route path="*" element={<Navigate to="/" replace" />} />
+    <Route path="/support" element={<SupportLayout />}><Route index element={<Navigate to="dashboard" replace />} /><Route path="*" element={<SupportPageV3 />} /></Route>
+    <Route path="*" element={<Navigate to="/" replace />} />
   </Routes>
 }
