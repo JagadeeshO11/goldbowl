@@ -1,5 +1,5 @@
 {
-  "buildCommand": "npm run build",
+  "buildCommand": "npm --prefix vite-project run build",
   "outputDirectory": "vite-project/dist",
   "installCommand": "npm install --prefix vite-project",
   "rewrites": [
