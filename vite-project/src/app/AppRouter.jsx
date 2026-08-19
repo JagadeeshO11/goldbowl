@@ -5,6 +5,7 @@ import { AdminLayout } from '../layouts/AdminLayout'
 import { SupportLayout } from '../layouts/SupportLayout'
 import { PrototypeHome } from '../pages/PrototypeHome'
 import { CustomerPage } from '../pages/customer/CustomerPage'
+import { GoldenCustomerHome } from '../pages/customer/GoldenCustomerHome'
 import { DeliveryPage } from '../pages/delivery/DeliveryPage'
 import { AdminPage } from '../pages/admin/AdminPage'
 import { SupportPageV3 } from '../pages/support/SupportPageV3'
@@ -22,7 +23,13 @@ export function AppRouter() {
     <Route path="/customer/verify-otp" element={<CustomerVerifyOtpPage />} />
     <Route path="/customer/forgot-password" element={<CustomerForgotPasswordPage />} />
     <Route path="/customer/location" element={<CustomerLocationPage />} />
-    <Route path="/customer" element={<CustomerAuthGuard />}><Route element={<CustomerLayout />}><Route index element={<Navigate to="home" replace />} /><Route path="*" element={<CustomerPage />} /></Route></Route>
+    <Route path="/customer" element={<CustomerAuthGuard />}>
+      <Route element={<CustomerLayout />}>
+        <Route index element={<Navigate to="home" replace />} />
+        <Route path="home" element={<GoldenCustomerHome />} />
+        <Route path="*" element={<CustomerPage />} />
+      </Route>
+    </Route>
     <Route path="/delivery/onboarding" element={<Navigate to="/delivery/signup" replace />} />
     <Route path="/delivery/signin" element={<DeliveryPartnerSignInPage />} />
     <Route path="/delivery/signup" element={<DeliverySignUpPage />} />
