@@ -1,5 +1,4 @@
-/* Golden Bowl logo sizing override
-   Keeps the real logo crisp and removes the undersized/duplicate mark treatment. */
+/* Golden Bowl logo + shared brand image override */
 .brand-mark,
 .auth-brand img,
 .route-brand img,
@@ -11,6 +10,7 @@
 .logo img {
   object-fit: contain;
   object-position: center;
+  content: url('https://res.cloudinary.com/dwmjz9csc/image/upload/v1787120716/image-removebg-preview_e1wfil.png');
 }
 
 .brand-mark {
@@ -18,7 +18,7 @@
   height: 64px !important;
   min-width: 64px !important;
   min-height: 64px !important;
-  padding: 5px !important;
+  padding: 4px !important;
   border-radius: 15px !important;
   background: transparent !important;
   box-shadow: none !important;
@@ -46,6 +46,18 @@
   max-height: 54px !important;
   object-fit: contain !important;
   display: block !important;
+  content: url('https://res.cloudinary.com/dwmjz9csc/image/upload/v1787120716/image-removebg-preview_e1wfil.png');
+}
+
+/* Use the new bowl artwork prominently in the customer landing hero. */
+.hero-bowl {
+  width: 155px !important;
+  height: 155px !important;
+  right: -2px !important;
+  bottom: -2px !important;
+  font-size: 0 !important;
+  background: transparent url('https://res.cloudinary.com/dwmjz9csc/image/upload/v1787120716/image-removebg-preview_e1wfil.png') center / contain no-repeat !important;
+  filter: drop-shadow(0 12px 15px rgba(141,103,31,.14));
 }
 
 @media (max-width: 700px) {
@@ -63,7 +75,7 @@
     height: 58px !important;
     min-width: 58px !important;
     min-height: 58px !important;
-    padding: 3px !important;
+    padding: 2px !important;
   }
 
   .mobile-header .brand-mark img,
@@ -88,7 +100,13 @@
     letter-spacing: 2px;
   }
 
-  /* Prevent the old oversized desktop logo treatment from surviving inside the phone shell. */
+  .hero-bowl {
+    width: 145px !important;
+    height: 145px !important;
+    right: -5px !important;
+    bottom: -3px !important;
+  }
+
   .mobile-shell > .brand-mark,
   .route-mobile-body > .brand-mark {
     display: none !important;
