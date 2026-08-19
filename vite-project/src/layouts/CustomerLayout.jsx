@@ -1,11 +1,10 @@
-import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import { NavLink, Outlet } from 'react-router-dom'
 import { Home, ClipboardList, ShoppingCart, Tag, Menu, MapPin, ChevronDown, UserRound } from 'lucide-react'
+import '../styles/customer-polish.css'
 
 const BOWL_LOGO = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787120716/image-removebg-preview_e1wfil.png'
 
 export function CustomerLayout() {
-  const { pathname } = useLocation()
-  const isHome = pathname === '/customer' || pathname === '/customer/home'
   const links = [
     ['home', 'Home', Home],
     ['orders', 'Orders', ClipboardList],
