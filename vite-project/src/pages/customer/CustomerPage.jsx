@@ -8,7 +8,7 @@ import { NotificationPanel } from '../../components/notifications/NotificationPa
 
 const titleMap={home:'Good food. Better bowls.',search:'Search food',orders:'My orders',profile:'My account',categories:'Categories',cart:'Your cart',checkout:'Checkout',payment:'Payment','order-success':'Order confirmed',track:'Track order',notifications:'Notifications'}
 const CART_KEY='goldbowl_cart',CHECKOUT_KEY='goldbowl_checkout'
-const LOGO_URL='https://res.cloudinary.com/dwmjz9csc/image/upload/e_trim/fl_preserve_transparency/f_auto,q_auto/v1787060691/Golden_bowl_-removebg-preview_yxaxp1.png'
+const LOGO_URL='https://res.cloudinary.com/dwmjz9csc/image/upload/v1787120716/image-removebg-preview_e1wfil.png'
 const readCart=()=>{try{return JSON.parse(localStorage.getItem(CART_KEY))||[]}catch{return[]}}
 const saveCart=items=>localStorage.setItem(CART_KEY,JSON.stringify(items))
 const money=v=>`₹${Math.round(v)}`
