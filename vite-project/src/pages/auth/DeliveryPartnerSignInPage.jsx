@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { ArrowLeft, Mail, Phone } from 'lucide-react'
+import { Mail, Phone, ArrowLeft } from 'lucide-react'
 import { useState } from 'react'
 import './auth.css'
 
@@ -22,7 +22,7 @@ export function DeliveryPartnerSignInPage(){
       <button className="auth-primary" disabled={!valid} onClick={()=>setSent(true)}>Continue</button>
       <div className="auth-divider"><span>or continue with</span></div>
       <button type="button" className="auth-social" onClick={continueLogin}><b>G</b> Continue with Google</button>
-      <button type="button" className="auth-social delivery-email-button" onClick={continueLogin}><Mail/> Continue with Email</button>
+      <button type="button" className="auth-social delivery-email-button" style={{marginTop:'-1px'}} onClick={continueLogin}><Mail/> Continue with Email</button>
     </>:<>
       <label><Phone/>Verification code<input value={otp} onChange={e=>setOtp(e.target.value.replace(/\D/g,'').slice(0,6))} placeholder="123456" inputMode="numeric"/></label>
       <button className="auth-primary" disabled={otp.length!==6} onClick={continueLogin}>Verify & continue</button>
