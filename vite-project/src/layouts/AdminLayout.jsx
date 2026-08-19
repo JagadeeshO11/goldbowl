@@ -1,7 +1,7 @@
 import { NavLink, Outlet } from 'react-router-dom'
 import { BarChart3, Package, Boxes, Store, Users, Truck, Headphones, Bell } from 'lucide-react'
 
-const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/e_trim/fl_preserve_transparency/f_auto,q_auto/v1787060691/Golden_bowl_-removebg-preview_yxaxp1.png'
+const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787120716/image-removebg-preview_e1wfil.png'
 const adminLogoCss = `.desktop-brand{display:flex;align-items:center;justify-content:flex-start;padding:18px 18px 30px;min-height:122px;box-sizing:border-box}.desktop-brand .brand-logo-wrap{display:flex;flex-direction:column;align-items:flex-start;gap:6px;width:100%}.desktop-brand img{width:178px!important;height:62px!important;max-width:none!important;max-height:none!important;object-fit:contain!important;object-position:left center!important;display:block!important}.desktop-brand small{font-size:9px;line-height:1;letter-spacing:2.2px;color:#c99b31;font-weight:800;padding-left:4px}`
 
 export function AdminLayout() {
