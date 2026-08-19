@@ -1,22 +1,34 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Search, Mic, MapPin, ChevronDown, UserRound, Heart, Star, Plus, ChevronRight, Truck, Navigation, CreditCard, Headphones } from 'lucide-react'
+import { Search, Mic, MapPin, ChevronDown, UserRound, Heart, Star, Plus, ChevronRight, Truck, Navigation, CreditCard, Headphones, ChevronLeft } from 'lucide-react'
 import { products, categories } from '../../data/mockData'
 import { CustomerHeader } from '../../layouts/CustomerLayout'
-
-const HERO_IMAGE = 'https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=1200&q=90'
 
 const categoryVisuals = {
   bowls: '🍲', rice: '🍚', wraps: '🌯', salads: '🥗', sides: '🍟', drinks: '🥤',
 }
 
+const heroSlides = [
+  { productId: 1, eyebrow: 'GOLDEN FAVOURITE', title: <>Delicious<br />Food,<br />Delivered<br />Fresh!</>, copy: 'Golden Chicken Bowl, made fresh for your next meal.' },
+  { productId: 3, eyebrow: 'MEAL DEAL', title: <>Big Taste,<br />Perfect<br />Rice<br />Feast!</>, copy: 'Chicken Rice Feast with aromatic spices and juicy chicken.' },
+  { productId: 2, eyebrow: 'VEG SPECIAL', title: <>Fresh,<br />Healthy<br />&<br />Delicious!</>, copy: 'Power up with our grilled Paneer Power Bowl.' },
+  { productId: 4, eyebrow: 'QUICK BITE', title: <>Crunchy<br />Wraps,<br />Made<br />Fresh!</>, copy: 'A freshly wrapped veggie crunch packed with flavour.' },
+]
+
 export function GoldenCustomerHome() {
   const navigate = useNavigate()
   const [selected, setSelected] = React.useState('all')
   const [query, setQuery] = React.useState('')
+  const [slide, setSlide] = React.useState(0)
 
-  const popular = products.slice(0, 3)
+  React.useEffect(() => {
+    const timer = window.setInterval(() => setSlide(current => (current + 1) % heroSlides.length), 4500)
+    return () => window.clearInterval(timer)
+  }, [])
+
   const visibleCategories = [{ id: 'all', name: 'All', icon: '🍲' }, ...categories]
+  const currentHero = heroSlides[slide]
+  const heroProduct = products.find(product => product.id === currentHero.productId) || products[0]
 
   const addToCart = (product) => {
     const key = 'goldbowl_cart'
@@ -30,19 +42,22 @@ export function GoldenCustomerHome() {
     navigate('/customer/cart')
   }
 
-  const filteredPopular = popular.filter(p => {
-    const matchesCategory = selected === 'all' || p.category === selected
-    const matchesSearch = !query.trim() || `${p.name} ${p.description}`.toLowerCase().includes(query.toLowerCase())
+  const filteredProducts = products.filter(product => {
+    const matchesCategory = selected === 'all' || product.category === selected
+    const matchesSearch = !query.trim() || `${product.name} ${product.description}`.toLowerCase().includes(query.toLowerCase())
     return matchesCategory && matchesSearch
   })
+
+  const previousSlide = () => setSlide(current => (current - 1 + heroSlides.length) % heroSlides.length)
+  const nextSlide = () => setSlide(current => (current + 1) % heroSlides.length)
 
   return <>
     <CustomerHeader onProfile={() => navigate('/customer/profile')} />
     <div className="customer-home-body">
       <div className="customer-search">
-        <Search size={26} strokeWidth={2} />
+        <Search size={24} strokeWidth={2} />
         <input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search for your favourite food..." aria-label="Search food" />
-        <Mic size={24} strokeWidth={2} />
+        <Mic size={22} strokeWidth={2} />
       </div>
 
       <div className="customer-categories" aria-label="Food categories">
@@ -57,43 +72,50 @@ export function GoldenCustomerHome() {
         </Link>)}
       </div>
 
-      <section className="customer-hero">
-        <img src={HERO_IMAGE} alt="Fresh Golden Food Bowl" />
+      <section className="customer-hero" aria-label="Featured food offers">
+        <img key={heroProduct.id} src={heroProduct.image} alt={heroProduct.name} />
         <div className="customer-hero-copy">
-          <h1>Delicious<br/>Food,<br/>Delivered<br/>Fresh!</h1>
-          <p>Order Now from<br/>Golden Food Bowl</p>
-          <Link to="/customer/categories">Order Now <ChevronRight size={17}/></Link>
+          <span className="hero-eyebrow">{currentHero.eyebrow}</span>
+          <h1>{currentHero.title}</h1>
+          <p>{currentHero.copy}</p>
+          <Link to={`/customer/product/${heroProduct.id}`}>Order Now <ChevronRight size={16} /></Link>
         </div>
-        <div className="hero-dots"><i/><i/><i/></div>
+        <button className="hero-arrow hero-arrow-left" onClick={previousSlide} aria-label="Previous slide"><ChevronLeft size={18} /></button>
+        <button className="hero-arrow hero-arrow-right" onClick={nextSlide} aria-label="Next slide"><ChevronRight size={18} /></button>
+        <div className="hero-dots">{heroSlides.map((item, index) => <button key={item.productId} className={index === slide ? 'active' : ''} onClick={() => setSlide(index)} aria-label={`Go to slide ${index + 1}`} />)}</div>
       </section>
 
       <div className="customer-section-title">
-        <h2>Popular Items</h2>
-        <Link to="/customer/search">View All <ChevronRight size={18}/></Link>
+        <div><span className="section-kicker">HANDPICKED FOR YOU</span><h2>Popular Items</h2></div>
+        <Link to="/customer/search">View All <ChevronRight size={18} /></Link>
       </div>
 
       <div className="customer-popular">
-        {filteredPopular.map(product => <article className="customer-food-card" key={product.id}>
+        {filteredProducts.map(product => <article className="customer-food-card" key={product.id}>
           <Link to={`/customer/product/${product.id}`} className="customer-food-img">
             <img src={product.image} alt={product.name} loading="lazy" />
-            <span className="food-heart"><Heart size={18}/></span>
+            <span className="food-heart" aria-label={`Favourite ${product.name}`}><Heart size={17} /></span>
           </Link>
           <div className="customer-food-info">
+            <span className="food-category-label">{categories.find(category => category.id === product.category)?.name?.replace('Signature ', '').replace('Fresh & Healthy', 'Fresh') || product.category}</span>
             <h3>{product.name}</h3>
-            <div className="food-rating"><Star size={12} fill="currentColor"/><Star size={12} fill="currentColor"/><Star size={12} fill="currentColor"/><Star size={12} fill="currentColor"/><Star size={12} fill="currentColor"/><span>({product.id === 1 ? 124 : product.id === 2 ? 98 : 76})</span></div>
+            <p className="food-description">{product.description}</p>
+            <div className="food-rating"><span className="rating-stars">{[1, 2, 3, 4, 5].map(star => <Star key={star} size={12} fill={star <= Math.round(product.rating) ? 'currentColor' : 'none'} />)}</span><strong>{product.rating.toFixed(1)}</strong><span className="rating-count">({product.id * 37 + 50})</span></div>
             <div className="customer-food-bottom">
-              <strong>₹{product.price}</strong>
-              <button className="customer-add" type="button" onClick={() => addToCart(product)}>Add <Plus size={14}/></button>
+              <div><span className="price-label">Price</span><strong>₹{product.price}</strong></div>
+              <button className="customer-add" type="button" onClick={() => addToCart(product)}>Add <Plus size={14} strokeWidth={2.8} /></button>
             </div>
           </div>
         </article>)}
       </div>
 
+      {filteredProducts.length === 0 && <div className="customer-empty-state"><strong>No dishes found</strong><span>Try another search or category.</span></div>}
+
       <div className="customer-benefits">
-        <div className="customer-benefit"><Truck size={28}/><strong>Fast Delivery</strong></div>
-        <div className="customer-benefit"><Navigation size={28}/><strong>Real-Time<br/>Tracking</strong></div>
-        <div className="customer-benefit"><CreditCard size={28}/><strong>Multiple<br/>Payment Modes</strong></div>
-        <div className="customer-benefit"><Headphones size={28}/><strong>24x7 Support</strong></div>
+        <div className="customer-benefit"><Truck size={27} /><strong>Fast Delivery</strong></div>
+        <div className="customer-benefit"><Navigation size={27} /><strong>Real-Time<br />Tracking</strong></div>
+        <div className="customer-benefit"><CreditCard size={27} /><strong>Multiple<br />Payment Modes</strong></div>
+        <div className="customer-benefit"><Headphones size={27} /><strong>24x7 Support</strong></div>
       </div>
     </div>
   </>
