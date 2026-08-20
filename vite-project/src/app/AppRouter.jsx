@@ -3,7 +3,6 @@ import { CustomerLayout } from '../layouts/CustomerLayout'
 import { DeliveryLayout } from '../layouts/DeliveryLayout'
 import { AdminLayout } from '../layouts/AdminLayout'
 import { SupportLayout } from '../layouts/SupportLayout'
-import { PrototypeHome } from '../pages/PrototypeHome'
 import { CustomerPage } from '../pages/customer/CustomerPage'
 import { GoldenCustomerHome } from '../pages/customer/GoldenCustomerHome'
 import { DeliveryPage } from '../pages/delivery/DeliveryPage'
@@ -16,7 +15,7 @@ import { CustomerAuthGuard, DeliveryAuthGuard } from './AuthGuard'
 
 export function AppRouter() {
   return <Routes>
-    <Route path="/" element={<PrototypeHome />} />
+    <Route path="/" element={<Navigate to="/customer/signin" replace />} />
     <Route path="/customer/auth" element={<Navigate to="/customer/signin" replace />} />
     <Route path="/customer/signin" element={<CustomerSignInPage />} />
     <Route path="/customer/signup" element={<CustomerSignUpPage />} />
