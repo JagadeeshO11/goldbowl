@@ -10,9 +10,5 @@ export function CustomerLayout() {
 }
 
 export function CustomerHeader({ onProfile }) {
-  return <header className="goldbowl-customer-header">
-    <NavLink to="/customer/home" className="goldbowl-brand" aria-label="Golden Food Bowl home"><img src={BOWL_LOGO} alt="Golden Food Bowl" /></NavLink>
-    <button type="button" className="goldbowl-header-location" aria-label="Detect current location"><MapPin size={16} fill="currentColor"/><span>Detect Location</span></button>
-    <div className="goldbowl-header-actions"><button type="button" className="branch-picker" aria-label="Select branch"><MapPin size={18} fill="currentColor"/><span>Select Branch</span><ChevronDown size={17}/></button><button type="button" className="profile-button" aria-label="Profile" onClick={onProfile}><UserRound size={23}/></button></div>
-  </header>
+  return <header className="goldbowl-customer-header"><NavLink to="/customer/home" className="goldbowl-brand" aria-label="Golden Food Bowl home"><img src={BOWL_LOGO} alt="Golden Food Bowl" /></NavLink><div className="goldbowl-header-actions"><button type="button" className="branch-picker" aria-label="Select branch"><MapPin size={18} fill="currentColor"/><span>Select Branch</span><ChevronDown size={17}/></button><button type="button" className="profile-button" aria-label="Profile" onClick={onProfile}><UserRound size={23}/></button></div></header>
 }
