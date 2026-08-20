@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { registerCustomer, registerDeliveryPartner } from '../../services/prototypeStore'
 import './auth.css'
 
-const Frame = ({ eyebrow, title, children, back='/' }) => <main className="auth-screen"><div className="auth-card"><Link to={back} className="auth-back"><ArrowLeft/> Back</Link><div className="auth-brand"><span>GOLDEN FOOD BOWL</span></div><span className="eyebrow">{eyebrow}</span><h1>{title}</h1>{children}</div></main>
+const LOGO = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787060691/Golden_bowl_-removebg-preview_yxaxp1.png'
+const Frame = ({ eyebrow, title, children, back='/' }) => <main className="auth-screen"><div className="auth-card"><Link to={back} className="auth-back"><ArrowLeft/> Back</Link><div className="auth-brand"><img src={LOGO} alt="Golden Food Bowl"/><span>GOLDEN FOOD BOWL</span></div><span className="eyebrow">{eyebrow}</span><h1>{title}</h1>{children}</div></main>
 const GoogleButton = ({ onClick }) => <button type="button" className="auth-social" onClick={onClick}><b>G</b> Continue with Google</button>
 const TextField = ({ icon: Icon, label, ...props }) => <label>{Icon && <Icon/>}{label}<input {...props}/></label>
 
