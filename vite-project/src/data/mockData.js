@@ -21,7 +21,6 @@ const foodImages = {
   salad: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=900&q=85',
   fries: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=900&q=85',
   lemonade: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=85',
-  chocolate: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476e?auto=format&fit=crop&w=900&q=85',
 }
 
 export const products = [
@@ -32,7 +31,6 @@ export const products = [
   { id: 5, name: 'Green Garden Salad', category: 'salads', price: 199, calories: 290, portion: '300g', rating: 4.5, image: foodImages.salad, description: 'Fresh greens, crunchy vegetables and a light citrus dressing.', ingredients: ['Lettuce', 'Cucumber', 'Tomato', 'Corn', 'Citrus dressing'], available: true },
   { id: 6, name: 'Golden Fries', category: 'sides', price: 119, calories: 360, portion: '180g', rating: 4.6, image: foodImages.fries, description: 'Crispy golden fries seasoned with our signature spice mix.', ingredients: ['Potato', 'Oil', 'Golden seasoning'], available: true },
   { id: 7, name: 'Classic Lemon Cooler', category: 'drinks', price: 89, calories: 110, portion: '350ml', rating: 4.7, image: foodImages.lemonade, description: 'Refreshing lemon cooler served chilled.', ingredients: ['Lemon', 'Water', 'Mint', 'Sugar'], available: true },
-  { id: 8, name: 'Chocolate Bowl', category: 'bowls', price: 159, calories: 390, portion: '250g', rating: 4.8, image: foodImages.chocolate, description: 'A rich chocolate dessert bowl for the perfect finish.', ingredients: ['Chocolate', 'Cream', 'Brownie', 'Cocoa'], available: true },
 ]
 
 export const initialOrders = [
@@ -41,11 +39,4 @@ export const initialOrders = [
   { id: 'BWL10243', items: [{ productId: 2, quantity: 1 }], total: 229, status: 'CONFIRMED', type: 'Delivery', branch: 'Bowl HSR', customer: 'Meera Nair', driver: 'Vikram Singh', eta: 35 },
 ]
 
-export const dashboardStats = {
-  sales: 84250,
-  orders: 126,
-  delivering: 18,
-  branches: 12,
-  customers: 3840,
-  deliveryStaff: 34,
-}
+export const dashboardStats = { sales: 84250, orders: 126, delivering: 18, branches: 12, customers: 3840, deliveryStaff: 34 }
