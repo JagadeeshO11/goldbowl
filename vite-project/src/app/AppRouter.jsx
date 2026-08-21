@@ -16,9 +16,9 @@ import { CustomerAuthGuard, DeliveryAuthGuard, AdminAuthGuard } from './AuthGuar
 
 export function AppRouter() {
   return <Routes>
-    {/* Public landing page now opens the Customer panel. The old role-selection launcher is disabled. */}
-    <Route path="/" element={<Navigate to="/customer/home" replace />} />
-    <Route path="/customer/auth" element={<Navigate to="/customer/home" replace />} />
+    {/* The public application entry is /customer. The old role-selection landing page is disabled. */}
+    <Route path="/" element={<Navigate to="/customer" replace />} />
+    <Route path="/customer/auth" element={<Navigate to="/customer" replace />} />
     <Route path="/customer/signin" element={<CustomerSignInPage />} />
     <Route path="/customer/signup" element={<CustomerSignUpPage />} />
     <Route path="/customer/verify-otp" element={<CustomerVerifyOtpPage />} />
@@ -26,7 +26,7 @@ export function AppRouter() {
     <Route path="/customer/location" element={<CustomerLocationPage />} />
     <Route path="/customer" element={<CustomerAuthGuard />}>
       <Route element={<CustomerLayout />}>
-        <Route index element={<Navigate to="home" replace />} />
+        <Route index element={<GoldenCustomerHome />} />
         <Route path="home" element={<GoldenCustomerHome />} />
         <Route path="*" element={<CustomerPage />} />
       </Route>
@@ -43,6 +43,6 @@ export function AppRouter() {
     <Route path="/admin/login" element={<AdminSignInPage />} />
     <Route path="/admin" element={<AdminAuthGuard />}><Route element={<AdminLayout />}><Route index element={<Navigate to="dashboard" replace />} /><Route path="*" element={<AdminPage />} /></Route></Route>
     <Route path="/support" element={<SupportLayout />}><Route index element={<Navigate to="dashboard" replace />} /><Route path="*" element={<SupportPageV3 />} /></Route>
-    <Route path="*" element={<Navigate to="/" replace />} />
+    <Route path="*" element={<Navigate to="/customer" replace />} />
   </Routes>
 }
