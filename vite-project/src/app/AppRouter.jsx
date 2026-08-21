@@ -12,7 +12,8 @@ import { CustomerSignUpPage, CustomerSignInPage, CustomerVerifyOtpPage, Customer
 import { DeliveryPartnerSignInPage } from '../pages/auth/DeliveryPartnerSignInPage'
 import { DeliveryLocationPage } from '../pages/auth/DeliveryLocationPage'
 import { AdminSignInPage } from '../pages/admin/AdminSignInPage'
-import { CustomerAuthGuard, DeliveryAuthGuard, AdminAuthGuard } from './AuthGuard'
+import { SupportSignInPage } from '../pages/support/SupportSignInPage'
+import { CustomerAuthGuard, DeliveryAuthGuard, AdminAuthGuard, SupportAuthGuard } from './AuthGuard'
 
 export function AppRouter() {
   return <Routes>
@@ -42,7 +43,9 @@ export function AppRouter() {
     <Route path="/admin/signin" element={<AdminSignInPage />} />
     <Route path="/admin/login" element={<AdminSignInPage />} />
     <Route path="/admin" element={<AdminAuthGuard />}><Route element={<AdminLayout />}><Route index element={<Navigate to="dashboard" replace />} /><Route path="*" element={<AdminPage />} /></Route></Route>
-    <Route path="/support" element={<SupportLayout />}><Route index element={<Navigate to="dashboard" replace />} /><Route path="*" element={<SupportPageV3 />} /></Route>
+    <Route path="/support/signin" element={<SupportSignInPage />} />
+    <Route path="/support/login" element={<SupportSignInPage />} />
+    <Route path="/support" element={<SupportAuthGuard />}><Route element={<SupportLayout />}><Route index element={<Navigate to="dashboard" replace />} /><Route path="*" element={<SupportPageV3 />} /></Route></Route>
     <Route path="*" element={<Navigate to="/customer" replace />} />
   </Routes>
 }

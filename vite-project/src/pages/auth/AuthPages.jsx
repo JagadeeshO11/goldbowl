@@ -67,3 +67,133 @@ export function CustomerSignInPage() {
 
 export function CustomerVerifyOtpPage(){const n=useNavigate();const[otp,setOtp]=useState('');const mobile=sessionStorage.getItem('bowlCustomerMobile')||'your mobile number';return <Frame eyebrow="OTP VERIFICATION" title="Verify your mobile"><p>Enter the 6-digit code sent to <strong>{mobile}</strong>. Prototype OTP: <strong>123456</strong>.</p><TextField icon={Phone} label="Verification code" value={otp} onChange={e=>setOtp(e.target.value.replace(/\D/g,'').slice(0,6))} placeholder="123456" inputMode="numeric"/><button className="auth-primary" disabled={otp.length!==6} onClick={()=>{sessionStorage.setItem('bowlCustomerAuth','1');n('/customer/location')}}>Verify & continue</button><p className="auth-switch-text"><Link to="/customer/signin">Use another number</Link></p></Frame>}
 export function CustomerForgotPasswordPage(){const n=useNavigate();const[mobile,setMobile]=useState('');return <Frame eyebrow="ACCOUNT RECOVERY" title="Recover your account"><p>Enter your registered mobile number and we'll send a verification code.</p><TextField icon={Phone} label="Mobile number" value={mobile} onChange={e=>setMobile(e.target.value.replace(/\D/g,'').slice(0,10))} placeholder="10-digit mobile number" inputMode="numeric"/><button className="auth-primary" disabled={!/^\d{10}$/.test(mobile)} onClick={()=>{sessionStorage.setItem('bowlCustomerMobile',mobile);n('/customer/verify-otp')}}>Send recovery OTP</button><p className="auth-switch-text"><Link to="/customer/signin">Back to sign in</Link></p></Frame>}
+
+export function CustomerLocationPage() {
+  const n = useNavigate()
+  return (
+    <Frame eyebrow="LOCATION" title="Select Delivery Address">
+      <p className="auth-desc">Choose your location in Bengaluru to view available bowls and delivery time.</p>
+      <button className="auth-primary gold-btn" onClick={() => n('/customer/home')}>
+        📍 Deliver to Indiranagar, Bengaluru
+      </button>
+      <button className="auth-secondary" style={{ marginTop: 8 }} onClick={() => n('/customer/home')}>
+        Use Current GPS Location
+      </button>
+    </Frame>
+  )
+}
+
+export function DeliverySignUpPage() {
+  const n = useNavigate()
+  const [name, setName] = useState('')
+  const [mobile, setMobile] = useState('')
+  const [vehicle, setVehicle] = useState('Bike')
+
+  const submit = e => {
+    e.preventDefault()
+    if (name.trim() && /^\d{10}$/.test(mobile)) {
+      registerDeliveryPartner({ name: name.trim(), mobile, vehicle })
+      sessionStorage.setItem('bowlDeliveryMobile', mobile)
+      n('/delivery/verification')
+    }
+  }
+
+  return (
+    <DeliveryFrame step={1} totalSteps={3} stepLabel="Partner Application">
+      <h2>Join Bowl Delivery Team</h2>
+      <p style={{ fontSize: 12, color: '#64748b', margin: '4px 0 16px' }}>Earn up to ₹35,000/month delivering fresh food bowls.</p>
+      <form onSubmit={submit} className="clean-form">
+        <TextField icon={UserRound} label="Full Name" value={name} onChange={e => setName(e.target.value)} placeholder="e.g. Rahul Kumar" required />
+        <TextField icon={Phone} label="Mobile Number" value={mobile} onChange={e => setMobile(e.target.value.replace(/\D/g, '').slice(0, 10))} placeholder="10-digit mobile number" inputMode="numeric" required />
+        <label className="clean-field">
+          <span className="field-label"><Car size={15} /> Vehicle Type</span>
+          <select value={vehicle} onChange={e => setVehicle(e.target.value)} style={{ padding: 10, borderRadius: 10, border: '1px solid #cbd5e1', width: '100%' }}>
+            <option value="Bike">Motorcycle / Bike</option>
+            <option value="Scooter">Scooter / Moped</option>
+            <option value="Electric Vehicle">Electric EV Scooter</option>
+          </select>
+        </label>
+        <button type="submit" className="auth-primary gold-btn" disabled={!name.trim() || !/^\d{10}$/.test(mobile)}>
+          Continue to Verification →
+        </button>
+      </form>
+      <p className="auth-switch-text">Already a partner? <Link to="/delivery/signin">Sign In</Link></p>
+    </DeliveryFrame>
+  )
+}
+
+export function DeliveryVerificationPage() {
+  const n = useNavigate()
+  const [aadhaar, setAadhaar] = useState('')
+  const [dl, setDl] = useState('')
+
+  const submit = e => {
+    e.preventDefault()
+    n('/delivery/fee')
+  }
+
+  return (
+    <DeliveryFrame step={2} totalSteps={3} stepLabel="Document Upload">
+      <h2>Verify Documents</h2>
+      <p style={{ fontSize: 12, color: '#64748b', margin: '4px 0 16px' }}>Provide Aadhaar and Driving License details for background check.</p>
+      <form onSubmit={submit} className="clean-form">
+        <TextField icon={FileText} label="Aadhaar Number" value={aadhaar} onChange={e => setAadhaar(e.target.value.replace(/\D/g, '').slice(0, 12))} placeholder="12-digit Aadhaar" inputMode="numeric" required />
+        <TextField icon={ShieldCheck} label="Driving License Number" value={dl} onChange={e => setDl(e.target.value)} placeholder="e.g. KA-01-2023-1234567" required />
+        <button type="submit" className="auth-primary gold-btn" disabled={aadhaar.length !== 12 || !dl.trim()}>
+          Proceed to Onboarding Fee →
+        </button>
+      </form>
+    </DeliveryFrame>
+  )
+}
+
+export function DeliveryFeePage() {
+  const n = useNavigate()
+
+  const pay = () => {
+    n('/delivery/submitted')
+  }
+
+  return (
+    <DeliveryFrame step={3} totalSteps={3} stepLabel="Onboarding Fee">
+      <h2>Partner Kit &amp; Fee</h2>
+      <p style={{ fontSize: 12, color: '#64748b', margin: '4px 0 16px' }}>One-time onboarding fee includes Golden Bowl Delivery Bag &amp; Uniform T-shirt.</p>
+      <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 14, padding: 16, marginBottom: 16 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8, fontSize: 13 }}>
+          <span>Delivery Bag &amp; Uniform Kit</span>
+          <strong>₹500</strong>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13 }}>
+          <span>Background Verification Fee</span>
+          <strong>₹200</strong>
+        </div>
+        <hr style={{ margin: '12px 0', borderColor: '#cbd5e1' }} />
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 15, fontWeight: 900 }}>
+          <span>Total One-Time Fee</span>
+          <span style={{ color: '#0284c7' }}>₹700</span>
+        </div>
+      </div>
+      <button type="button" className="auth-primary gold-btn" onClick={pay}>
+        Pay ₹700 &amp; Submit Application →
+      </button>
+    </DeliveryFrame>
+  )
+}
+
+export function DeliveryApplicationSubmittedPage() {
+  const n = useNavigate()
+  return (
+    <DeliveryFrame step={3} totalSteps={3} stepLabel="Submitted">
+      <div style={{ textAlign: 'center', padding: '20px 0' }}>
+        <span style={{ fontSize: 48 }}>🎉</span>
+        <h2 style={{ marginTop: 12 }}>Application Submitted!</h2>
+        <p style={{ fontSize: 12, color: '#64748b', margin: '8px 0 20px' }}>
+          Your delivery partner application is currently under verification by Golden Bowl Admin.
+        </p>
+        <button className="auth-primary gold-btn" onClick={() => n('/delivery/orders')}>
+          Go to Partner App →
+        </button>
+      </div>
+    </DeliveryFrame>
+  )
+}

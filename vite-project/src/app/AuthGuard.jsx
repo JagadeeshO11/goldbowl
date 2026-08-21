@@ -24,3 +24,8 @@ export function AdminAuthGuard(){
   return ready ? <Outlet/> : <Navigate to="/admin/signin" replace state={{from:location.pathname}} />
 }
 
+export function SupportAuthGuard(){
+  const location=useLocation()
+  const ready=sessionStorage.getItem('bowlSupportAuth')==='1'
+  return ready ? <Outlet/> : <Navigate to="/support/signin" replace state={{from:location.pathname}} />
+}
