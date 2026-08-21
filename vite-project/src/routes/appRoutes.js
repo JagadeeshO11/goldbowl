@@ -6,7 +6,7 @@ export const customerRoutes = [
 
 export const deliveryRoutes = [
   '/delivery/login', '/delivery/signup', '/delivery/signin', '/delivery/verification', '/delivery/onboarding-fee', '/delivery/application-submitted', '/delivery/dashboard', '/delivery/orders',
-  '/delivery/orders/:id', '/delivery/navigation/:id', '/delivery/profile', '/delivery/notifications',
+  '/delivery/orders/:id', '/delivery/navigation/:id', '/delivery/gigs', '/delivery/wallet', '/delivery/profile', '/delivery/notifications',
 ]
 
 export const adminRoutes = [

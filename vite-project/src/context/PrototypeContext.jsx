@@ -8,6 +8,7 @@ export function PrototypeProvider({ children }) {
   return <PrototypeContext.Provider value={state}>{children}</PrototypeContext.Provider>
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function usePrototypeContext() {
   const context = useContext(PrototypeContext)
   if (!context) throw new Error('usePrototypeContext must be used inside PrototypeProvider')

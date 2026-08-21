@@ -11,12 +11,13 @@ import { SupportPageV3 } from '../pages/support/SupportPageV3'
 import { CustomerSignUpPage, CustomerSignInPage, CustomerVerifyOtpPage, CustomerForgotPasswordPage, CustomerLocationPage, DeliverySignUpPage, DeliveryVerificationPage, DeliveryFeePage, DeliveryApplicationSubmittedPage } from '../pages/auth/AuthPages'
 import { DeliveryPartnerSignInPage } from '../pages/auth/DeliveryPartnerSignInPage'
 import { DeliveryLocationPage } from '../pages/auth/DeliveryLocationPage'
-import { CustomerAuthGuard, DeliveryAuthGuard } from './AuthGuard'
+import { AdminSignInPage } from '../pages/admin/AdminSignInPage'
+import { CustomerAuthGuard, DeliveryAuthGuard, AdminAuthGuard } from './AuthGuard'
 
 export function AppRouter() {
   return <Routes>
-    <Route path="/" element={<Navigate to="/customer/signin" replace />} />
-    <Route path="/customer/auth" element={<Navigate to="/customer/signin" replace />} />
+    <Route path="/" element={<Navigate to="/customer/home" replace />} />
+    <Route path="/customer/auth" element={<Navigate to="/customer/home" replace />} />
     <Route path="/customer/signin" element={<CustomerSignInPage />} />
     <Route path="/customer/signup" element={<CustomerSignUpPage />} />
     <Route path="/customer/verify-otp" element={<CustomerVerifyOtpPage />} />
@@ -37,7 +38,9 @@ export function AppRouter() {
     <Route path="/delivery/onboarding-fee/payment" element={<DeliveryFeePage />} />
     <Route path="/delivery/application-submitted" element={<DeliveryApplicationSubmittedPage />} />
     <Route path="/delivery" element={<DeliveryAuthGuard />}><Route element={<DeliveryLayout />}><Route index element={<Navigate to="dashboard" replace />} /><Route path="*" element={<DeliveryPage />} /></Route></Route>
-    <Route path="/admin" element={<AdminLayout />}><Route index element={<Navigate to="dashboard" replace />} /><Route path="*" element={<AdminPage />} /></Route>
+    <Route path="/admin/signin" element={<AdminSignInPage />} />
+    <Route path="/admin/login" element={<AdminSignInPage />} />
+    <Route path="/admin" element={<AdminAuthGuard />}><Route element={<AdminLayout />}><Route index element={<Navigate to="dashboard" replace />} /><Route path="*" element={<AdminPage />} /></Route></Route>
     <Route path="/support" element={<SupportLayout />}><Route index element={<Navigate to="dashboard" replace />} /><Route path="*" element={<SupportPageV3 />} /></Route>
     <Route path="*" element={<Navigate to="/" replace />} />
   </Routes>

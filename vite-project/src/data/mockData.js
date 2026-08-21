@@ -21,6 +21,14 @@ const foodImages = {
   salad: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=900&q=85',
   fries: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=900&q=85',
   lemonade: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=900&q=85',
+  bbqBowl: 'https://images.unsplash.com/photo-1543339308-43e59d6b73a6?auto=format&fit=crop&w=900&q=85',
+  falafelWrap: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=900&q=85',
+  greekSalad: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=900&q=85',
+  butterChickenRice: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=900&q=85',
+  tofuTeriyaki: 'https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?auto=format&fit=crop&w=900&q=85',
+  cheesyNacho: 'https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?auto=format&fit=crop&w=900&q=85',
+  mangoShake: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=900&q=85',
+  icedTea: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=900&q=85',
 }
 
 export const products = [
@@ -29,8 +37,16 @@ export const products = [
   { id: 3, name: 'Chicken Rice Feast', category: 'rice', price: 279, calories: 710, portion: '500g', rating: 4.9, image: foodImages.chickenRice, description: 'A hearty rice meal with juicy chicken and aromatic spices.', ingredients: ['Chicken', 'Rice', 'Onion', 'Spices', 'Coriander'], available: true },
   { id: 4, name: 'Veggie Crunch Wrap', category: 'wraps', price: 179, calories: 430, portion: '280g', rating: 4.6, image: foodImages.veggieWrap, description: 'Crisp vegetables, seasoned filling and golden sauce wrapped fresh.', ingredients: ['Tortilla', 'Lettuce', 'Corn', 'Beans', 'Sauce'], available: true },
   { id: 5, name: 'Green Garden Salad', category: 'salads', price: 199, calories: 290, portion: '300g', rating: 4.5, image: foodImages.salad, description: 'Fresh greens, crunchy vegetables and a light citrus dressing.', ingredients: ['Lettuce', 'Cucumber', 'Tomato', 'Corn', 'Citrus dressing'], available: true },
-  { id: 6, name: 'Golden Fries', category: 'sides', price: 119, calories: 360, portion: '180g', rating: 4.6, image: foodImages.fries, description: 'Crispy golden fries seasoned with our signature spice mix.', ingredients: ['Potato', 'Oil', 'Golden seasoning'], available: true },
-  { id: 7, name: 'Classic Lemon Cooler', category: 'drinks', price: 89, calories: 110, portion: '350ml', rating: 4.7, image: foodImages.lemonade, description: 'Refreshing lemon cooler served chilled.', ingredients: ['Lemon', 'Water', 'Mint', 'Sugar'], available: true },
+  { id: 6, name: 'Smokey BBQ Bowl', category: 'bowls', price: 269, calories: 640, portion: '460g', rating: 4.8, image: foodImages.bbqBowl, description: 'Smokey BBQ glazed chicken with roasted corn, quinoa and avocado.', ingredients: ['BBQ Chicken', 'Quinoa', 'Roasted Corn', 'Avocado', 'Herbs'], available: true },
+  { id: 7, name: 'Crispy Falafel Wrap', category: 'wraps', price: 189, calories: 410, portion: '290g', rating: 4.7, image: foodImages.falafelWrap, description: 'Golden falafel bites with hummus, pickled beets and tahini sauce.', ingredients: ['Falafel', 'Hummus', 'Tahini', 'Pickles', 'Tortilla'], available: true },
+  { id: 8, name: 'Butter Chicken Rice', category: 'rice', price: 289, calories: 730, portion: '520g', rating: 4.9, image: foodImages.butterChickenRice, description: 'Rich creamy butter chicken served over fragrant jeera rice.', ingredients: ['Chicken', 'Butter gravy', 'Jeera rice', 'Cream'], available: true },
+  { id: 9, name: 'Tofu Teriyaki Bowl', category: 'salads', price: 219, calories: 480, portion: '380g', rating: 4.6, image: foodImages.tofuTeriyaki, description: 'Seared tofu with edamame, purple cabbage and teriyaki glaze.', ingredients: ['Tofu', 'Edamame', 'Purple Cabbage', 'Teriyaki', 'Sesame'], available: true },
+  { id: 10, name: 'Greek Feta Salad', category: 'salads', price: 209, calories: 310, portion: '320g', rating: 4.6, image: foodImages.greekSalad, description: 'Crumble feta, kalamata olives, crisp cucumbers and oregano dressing.', ingredients: ['Feta', 'Olives', 'Cucumber', 'Cherry tomato', 'Olive oil'], available: true },
+  { id: 11, name: 'Golden Fries', category: 'sides', price: 119, calories: 360, portion: '180g', rating: 4.6, image: foodImages.fries, description: 'Crispy golden fries seasoned with our signature spice mix.', ingredients: ['Potato', 'Oil', 'Golden seasoning'], available: true },
+  { id: 12, name: 'Cheesy Nacho Bowl', category: 'sides', price: 149, calories: 420, portion: '220g', rating: 4.7, image: foodImages.cheesyNacho, description: 'Tortilla chips topped with warm jalapeño cheese, salsa and sour cream.', ingredients: ['Nachos', 'Melted cheese', 'Salsa', 'Jalapeños'], available: true },
+  { id: 13, name: 'Classic Lemon Cooler', category: 'drinks', price: 89, calories: 110, portion: '350ml', rating: 4.7, image: foodImages.lemonade, description: 'Refreshing lemon cooler served chilled.', ingredients: ['Lemon', 'Water', 'Mint', 'Sugar'], available: true },
+  { id: 14, name: 'Fresh Mango Shake', category: 'drinks', price: 129, calories: 240, portion: '350ml', rating: 4.9, image: foodImages.mangoShake, description: 'Thick creamy Alphonso mango shake blended fresh.', ingredients: ['Mango pulp', 'Milk', 'Ice cream'], available: true },
+  { id: 15, name: 'Peach Iced Tea', category: 'drinks', price: 99, calories: 130, portion: '350ml', rating: 4.7, image: foodImages.icedTea, description: 'Fresh brewed black tea infused with natural peach flavor.', ingredients: ['Brewed tea', 'Peach extract', 'Lemon', 'Ice'], available: true },
 ]
 
 export const initialOrders = [

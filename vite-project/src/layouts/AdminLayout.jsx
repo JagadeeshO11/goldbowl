@@ -1,10 +1,462 @@
-import { NavLink, Outlet } from 'react-router-dom'
-import { BarChart3, Package, Boxes, Store, Users, Truck, Headphones, Bell } from 'lucide-react'
+import { useState } from 'react'
+import { NavLink, Outlet, useNavigate } from 'react-router-dom'
+import {
+  BarChart3,
+  Package,
+  Boxes,
+  Store,
+  Users,
+  Truck,
+  Headphones,
+  Bell,
+  LogOut,
+  Monitor,
+  Smartphone,
+  ShieldCheck
+} from 'lucide-react'
+import { MobileStatusBar } from './CustomerLayout'
 
 const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787120716/image-removebg-preview_e1wfil.png'
-const adminLogoCss = `.desktop-brand{display:flex;align-items:center;justify-content:flex-start;padding:18px 18px 30px;min-height:122px;box-sizing:border-box}.desktop-brand .brand-logo-wrap{display:flex;flex-direction:column;align-items:flex-start;gap:6px;width:100%}.desktop-brand img{width:178px!important;height:62px!important;max-width:none!important;max-height:none!important;object-fit:contain!important;object-position:left center!important;display:block!important}.desktop-brand small{font-size:9px;line-height:1;letter-spacing:2.2px;color:#c99b31;font-weight:800;padding-left:4px}`
+
+const adminLayoutCss = `
+/* ── DESKTOP LAYOUT ── */
+.admin-desktop-shell {
+  display: flex;
+  min-height: 100vh;
+  background: #f7f5f0;
+  color: #1c1917;
+  font-family: inherit;
+}
+
+.admin-desktop-sidebar {
+  width: 250px;
+  background: linear-gradient(180deg, #1c1208 0%, #2b1c0b 100%);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 14px;
+  flex-shrink: 0;
+  box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+}
+
+.admin-sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  margin-bottom: 16px;
+}
+
+.admin-sidebar-brand img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.admin-sidebar-brand div {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-sidebar-brand strong {
+  font-size: 13px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+.admin-sidebar-brand small {
+  font-size: 8.5px;
+  color: #dfa500;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.admin-role-chip {
+  background: rgba(223,165,0,0.15);
+  color: #f5c518;
+  border: 1px solid rgba(223,165,0,0.3);
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 9.5px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.admin-desktop-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.admin-desktop-nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.admin-desktop-nav a:hover {
+  background: rgba(255,255,255,0.08);
+  color: #ffffff;
+}
+
+.admin-desktop-nav a.active {
+  background: linear-gradient(135deg, #dfa500, #f5c518);
+  color: #1c1208;
+  font-weight: 900;
+  box-shadow: 0 4px 12px rgba(223,165,0,0.3);
+}
+
+.admin-sidebar-logout {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(239,68,68,0.3);
+  background: rgba(239,68,68,0.1);
+  color: #fca5a5;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.15s ease;
+  margin-top: 14px;
+}
+
+.admin-sidebar-logout:hover {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.admin-desktop-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  min-width: 0;
+}
+
+.admin-desktop-topbar {
+  background: #ffffff;
+  border-bottom: 1px solid #eee4d2;
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+}
+
+.admin-topbar-left h1 {
+  font-size: 20px;
+  font-weight: 900;
+  margin: 0;
+  color: #1c1917;
+}
+
+.admin-topbar-left span {
+  font-size: 10.5px;
+  color: #78716c;
+  font-weight: 600;
+}
+
+.admin-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-mode-toggle-btn {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1.5px solid #dfa500;
+  background: #fffdf0;
+  color: #854d0e;
+  font-size: 11.5px;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 8px rgba(223,165,0,0.15);
+  transition: all 0.15s ease;
+}
+
+.admin-mode-toggle-btn:hover {
+  background: #dfa500;
+  color: #1c1208;
+}
+
+.admin-user-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px;
+  background: #faf8f5;
+  border: 1px solid #f0e9dc;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  color: #1c1917;
+}
+
+.admin-user-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #dfa500;
+  color: #1c1208;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 11px;
+}
+
+.admin-desktop-content {
+  padding: 24px 28px;
+  flex: 1;
+}
+
+/* ── MOBILE LAYOUT ── */
+.admin-mobile-header {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  border-bottom: 1px solid #eee7dc;
+  background: #ffffff;
+  flex: 0 0 60px;
+  z-index: 5;
+}
+
+.admin-mobile-header img {
+  height: 38px;
+  object-fit: contain;
+}
+
+.admin-mobile-header div {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.admin-mobile-header strong {
+  font-size: 12px;
+  color: #29251f;
+  letter-spacing: 0.5px;
+}
+
+.admin-mobile-header small {
+  font-size: 8px;
+  color: #b4811d;
+  font-weight: 900;
+}
+
+.admin-mobile-nav {
+  display: flex;
+  overflow-x: auto;
+  background: #faf7f2;
+  border-bottom: 1px solid #eee5d5;
+  padding: 8px 10px;
+  gap: 6px;
+  flex: 0 0 46px;
+  scrollbar-width: none;
+}
+
+.admin-mobile-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.admin-mobile-nav a {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #6e675b;
+  text-decoration: none;
+  white-space: nowrap;
+  background: #ffffff;
+  border: 1px solid #eadeca;
+}
+
+.admin-mobile-nav a.active {
+  background: #b4811d;
+  color: #ffffff;
+  border-color: #b4811d;
+}
+
+.admin-mobile-content {
+  padding: 14px 14px 100px;
+  flex: 1;
+  overflow-y: auto;
+}
+`
 
 export function AdminLayout() {
-  const links = [['dashboard','Dashboard',BarChart3],['orders','Orders',Package],['products','Products',Boxes],['categories','Categories',Boxes],['branches','Branches',Store],['customers','Customers',Users],['delivery','Delivery',Truck],['support','Support',Headphones],['reports','Reports',BarChart3],['notifications','Notifications',Bell]]
-  return <div className="desktop-dashboard"><style>{adminLogoCss}</style><aside className="desktop-sidebar"><div className="desktop-brand"><div className="brand-logo-wrap"><img src={LOGO_URL} alt="Golden Food Bowl" /><small>BOWL ADMIN</small></div></div>{links.map(([to,label,Icon]) => <NavLink key={to} to={`/admin/${to}`} className={({isActive}) => isActive ? 'active' : ''}><Icon size={19}/><span>{label}</span></NavLink>)}</aside><main className="desktop-main"><Outlet /></main></div>
+  const navigate = useNavigate()
+  // viewMode: 'desktop' | 'mobile'
+  const [viewMode, setViewMode] = useState('desktop')
+
+  const links = [
+    ['dashboard', 'Overview', BarChart3],
+    ['orders', 'Orders', Package],
+    ['products', 'Products', Boxes],
+    ['categories', 'Categories', Boxes],
+    ['branches', 'Branches', Store],
+    ['customers', 'Customers', Users],
+    ['delivery', 'Delivery Staff', Truck],
+    ['support', 'Support Desk', Headphones],
+    ['reports', 'Sales & Reports', BarChart3],
+    ['notifications', 'Alerts', Bell],
+  ]
+
+  const signOut = () => {
+    sessionStorage.removeItem('bowlAdminAuth')
+    sessionStorage.removeItem('bowlAdminEmail')
+    navigate('/admin/signin', { replace: true })
+  }
+
+  const toggleViewMode = () => {
+    setViewMode(mode => (mode === 'desktop' ? 'mobile' : 'desktop'))
+  }
+
+  return (
+    <>
+      <style>{adminLayoutCss}</style>
+      {viewMode === 'desktop' ? (
+        /* 🖥️ DESKTOP VIEW */
+        <div className="admin-desktop-shell">
+          <aside className="admin-desktop-sidebar">
+            <div className="admin-sidebar-brand">
+              <img src={LOGO_URL} alt="Golden Food Bowl" />
+              <div>
+                <strong>Golden Food Bowl</strong>
+                <small>Admin Portal</small>
+              </div>
+            </div>
+
+            <div className="admin-role-chip">
+              <ShieldCheck size={13} />
+              <span>⚡ Super Admin Access</span>
+            </div>
+
+            <nav className="admin-desktop-nav">
+              {links.map(([to, label, Icon]) => (
+                <NavLink
+                  key={to}
+                  to={`/admin/${to}`}
+                  className={({ isActive }) => (isActive ? 'active' : '')}
+                >
+                  <Icon size={16} />
+                  <span>{label}</span>
+                </NavLink>
+              ))}
+            </nav>
+
+            <button type="button" className="admin-sidebar-logout" onClick={signOut}>
+              <LogOut size={16} />
+              <span>Sign Out Admin</span>
+            </button>
+          </aside>
+
+          <main className="admin-desktop-main">
+            <header className="admin-desktop-topbar">
+              <div className="admin-topbar-left">
+                <h1>Admin Command Desk</h1>
+                <span>Real-time operations, orders, and branch management</span>
+              </div>
+
+              <div className="admin-topbar-right">
+                {/* 🔄 VIEW TRANSITION TOGGLE BUTTON */}
+                <button
+                  type="button"
+                  className="admin-mode-toggle-btn"
+                  onClick={toggleViewMode}
+                  title="Switch to Mobile App View"
+                >
+                  <Smartphone size={15} />
+                  <span>📱 Switch to Mobile View</span>
+                </button>
+
+                <div className="admin-user-pill">
+                  <div className="admin-user-avatar">AD</div>
+                  <span>Admin User</span>
+                </div>
+              </div>
+            </header>
+
+            <div className="admin-desktop-content">
+              <Outlet />
+            </div>
+          </main>
+        </div>
+      ) : (
+        /* 📱 MOBILE VIEW */
+        <div className="mobile-prototype-frame">
+          <div className="mobile-app-shell">
+            <MobileStatusBar />
+            <header className="admin-mobile-header">
+              <img src={LOGO_URL} alt="Golden Food Bowl" />
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                {/* 🔄 VIEW TRANSITION TOGGLE BUTTON */}
+                <button
+                  type="button"
+                  className="admin-mode-toggle-btn"
+                  style={{ padding: '4px 8px', fontSize: 10 }}
+                  onClick={toggleViewMode}
+                  title="Switch to Desktop View"
+                >
+                  <Monitor size={12} />
+                  <span>Desktop</span>
+                </button>
+                <button
+                  type="button"
+                  style={{ background: 'none', border: 0, color: '#ef4444', cursor: 'pointer', padding: 4 }}
+                  onClick={signOut}
+                  title="Sign Out"
+                >
+                  <LogOut size={16} />
+                </button>
+              </div>
+            </header>
+            <nav className="admin-mobile-nav">
+              {links.map(([to, label, Icon]) => (
+                <NavLink
+                  key={to}
+                  to={`/admin/${to}`}
+                  className={({ isActive }) => (isActive ? 'active' : '')}
+                >
+                  <Icon size={13} />
+                  <span>{label}</span>
+                </NavLink>
+              ))}
+            </nav>
+            <main className="mobile-route-content admin-mobile-content">
+              <Outlet />
+            </main>
+          </div>
+        </div>
+      )}
+    </>
+  )
 }

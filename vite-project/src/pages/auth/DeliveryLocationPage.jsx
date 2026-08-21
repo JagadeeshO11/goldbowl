@@ -37,7 +37,7 @@ export function DeliveryLocationPage(){
     },{enableHighAccuracy:true,timeout:12000,maximumAge:60000})
   }
 
-  return <main className="auth-screen"><div className="auth-card">
+  return <div className="mobile-prototype-frame"><div className="mobile-app-shell"><main className="auth-screen mobile-route-content"><div className="auth-card">
     <button type="button" className="auth-back" onClick={()=>navigate('/delivery/verification')}><ArrowLeft/> Back</button>
     <div className="auth-brand">🥣<span>GOLDEN FOOD BOWL</span></div>
     <span className="eyebrow">CURRENT LOCATION</span><h1>Share your delivery location</h1>
@@ -46,5 +46,5 @@ export function DeliveryLocationPage(){
     {error&&<p className="auth-error">{error}</p>}
     {status!=='success'?<button className="auth-primary" type="button" onClick={detect} disabled={status==='loading'}><LocateFixed/> {status==='loading'?'Detecting location…':'Use my current location'}</button>:<><div className="auth-summary"><span>Detected area <b>{location.label}</b></span><span>Coordinates <b>{location.latitude.toFixed(4)}, {location.longitude.toFixed(4)}</b></span><span>Location sharing <b>Ready</b></span></div><button className="auth-primary" type="button" onClick={()=>navigate('/delivery/onboarding-fee/payment')}>Continue to onboarding fee</button></>}
     <p className="auth-switch-text">Your browser/device will ask for location permission the first time.</p>
-  </div></main>
+  </div></main></div></div>
 }

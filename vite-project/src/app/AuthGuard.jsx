@@ -1,9 +1,13 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 
 export function CustomerAuthGuard(){
-  const location=useLocation()
-  const ready=Boolean(sessionStorage.getItem('bowlCustomerLocation'))
-  return ready ? <Outlet/> : <Navigate to="/customer/signin" replace state={{from:location.pathname}} />
+  const existing=sessionStorage.getItem('bowlCustomerLocation')
+  if(!existing){
+    const defaultLoc={name:'Madhapur',state:'Hyderabad',label:'Madhapur, Hyderabad',latitude:17.4483,longitude:78.3915}
+    sessionStorage.setItem('bowlCustomerLocation',JSON.stringify(defaultLoc))
+    sessionStorage.setItem('bowlCustomerAuth','1')
+  }
+  return <Outlet/>
 }
 
 export function DeliveryAuthGuard(){
@@ -13,3 +17,10 @@ export function DeliveryAuthGuard(){
   const ready=sessionReady || onboarding.verificationStatus==='VERIFIED'
   return ready ? <Outlet/> : <Navigate to="/delivery/signin" replace state={{from:location.pathname}} />
 }
+
+export function AdminAuthGuard(){
+  const location=useLocation()
+  const ready=sessionStorage.getItem('bowlAdminAuth')==='1'
+  return ready ? <Outlet/> : <Navigate to="/admin/signin" replace state={{from:location.pathname}} />
+}
+
