@@ -16,6 +16,7 @@ import { CustomerAuthGuard, DeliveryAuthGuard, AdminAuthGuard } from './AuthGuar
 
 export function AppRouter() {
   return <Routes>
+    {/* Public landing page now opens the Customer panel. The old role-selection launcher is disabled. */}
     <Route path="/" element={<Navigate to="/customer/home" replace />} />
     <Route path="/customer/auth" element={<Navigate to="/customer/home" replace />} />
     <Route path="/customer/signin" element={<CustomerSignInPage />} />
