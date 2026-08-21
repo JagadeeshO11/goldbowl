@@ -2,7 +2,8 @@ import { NavLink, Outlet } from 'react-router-dom'
 import { BarChart3, Package, Boxes, Headphones, Bell } from 'lucide-react'
 import { MobileStatusBar } from './CustomerLayout'
 
-const LOGO_URL = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787120716/image-removebg-preview_e1wfil.png'
+// Keep the Support logo identical to the logo used in the Customer header.
+const BOWL_LOGO = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787120716/image-removebg-preview_e1wfil.png'
 
 export function SupportLayout() {
   const links = [
@@ -17,7 +18,7 @@ export function SupportLayout() {
       <div className="mobile-app-shell">
         <MobileStatusBar />
         <header className="admin-mobile-header">
-          <img src={LOGO_URL} alt="Golden Food Bowl" />
+          <img src={BOWL_LOGO} alt="Golden Food Bowl" />
           <div>
             <strong>BOWL SUPPORT</strong>
             <small>SUPPORT TEAM</small>
@@ -38,4 +39,3 @@ export function SupportLayout() {
     </div>
   )
 }
-
