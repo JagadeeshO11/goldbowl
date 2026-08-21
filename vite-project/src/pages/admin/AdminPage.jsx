@@ -45,6 +45,7 @@ import {
 } from '../../services/prototypeStore'
 import { NotificationPanel } from '../../components/notifications/NotificationPanel'
 import { AdminReports } from './AdminReports'
+import './admin-content.css'
 
 const navTitles = {
   dashboard: 'Overview & Operations',

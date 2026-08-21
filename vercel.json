@@ -1,6 +1,6 @@
 {
   "git": {
-    "deploymentEnabled": false
+    "deploymentEnabled": true
   },
   "buildCommand": "npm --prefix vite-project run build",
   "outputDirectory": "vite-project/dist",

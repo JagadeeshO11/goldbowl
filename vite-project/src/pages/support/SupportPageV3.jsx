@@ -31,6 +31,7 @@ import {
   updateIssue
 } from '../../services/prototypeStore'
 import { NotificationPanel } from '../../components/notifications/NotificationPanel'
+import './support-content.css'
 
 const navTitles = {
   dashboard: 'Support Desk Overview',
