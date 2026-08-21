@@ -16,12 +16,8 @@ import { CustomerAuthGuard, DeliveryAuthGuard, AdminAuthGuard } from './AuthGuar
 
 export function AppRouter() {
   return <Routes>
-    {/* Root now opens the Customer panel directly. The old role-selection landing page is disabled. */}
-    <Route path="/" element={<CustomerAuthGuard />}>
-      <Route element={<CustomerLayout />}>
-        <Route index element={<GoldenCustomerHome />} />
-      </Route>
-    </Route>
+    {/* Root is the public Customer Sign In page. The old role-selection landing page is removed from the entry route. */}
+    <Route path="/" element={<CustomerSignInPage />} />
     <Route path="/customer/auth" element={<Navigate to="/customer" replace />} />
     <Route path="/customer/signin" element={<CustomerSignInPage />} />
     <Route path="/customer/signup" element={<CustomerSignUpPage />} />
