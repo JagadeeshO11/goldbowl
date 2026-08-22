@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useNavigate } from 'react-router-dom'
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { Home, ClipboardList, ShoppingCart, Tag, Menu, UserRound } from 'lucide-react'
 import '../styles/customer-polish.css'
 import '../customer-panel-enhancements.css'
@@ -12,9 +12,11 @@ export function MobileStatusBar() {
 
 export function CustomerLayout() {
   const navigate = useNavigate()
+  const location = useLocation()
+  const isCheckout = location.pathname === '/customer/checkout'
   const links = [['home','Home',Home],['orders','Orders',ClipboardList],['cart','Cart',ShoppingCart],['offers','Offers',Tag],['profile','More',Menu]]
   return (
-    <div className="mobile-prototype-frame customer-prototype-frame">
+    <div className={`mobile-prototype-frame customer-prototype-frame ${isCheckout ? 'checkout-page' : ''}`}>
       <div className="mobile-app-shell customer-app-shell">
         <CustomerHeader onProfile={() => navigate('/customer/profile')} />
         <main className="mobile-route-content customer-route-content"><Outlet /></main>
@@ -37,7 +39,6 @@ export function CustomerHeader({ onProfile }) {
             <span className="header-company-tagline">Fresh • Tasty • Fast</span>
           </div>
         </NavLink>
-        {/* Branch selector and Login are intentionally hidden for now. */}
         {sessionStorage.getItem('bowlCustomerAuth') === '1' && (
           <button type="button" className="profile-button" aria-label="Profile" onClick={onProfile}>
             <UserRound size={23}/>
