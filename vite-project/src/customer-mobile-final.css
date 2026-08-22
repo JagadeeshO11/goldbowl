@@ -1,0 +1,52 @@
+/* Final customer mobile overrides. Loaded after all existing customer CSS. */
+@media (max-width: 700px) {
+  .mobile-status-bar,
+  .status-bar,
+  .status-bar-left,
+  .status-bar-right,
+  .network-type,
+  .battery-indicator,
+  .charging-icon {
+    display: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .goldbowl-top-header-group { padding-top: 0 !important; margin-top: 0 !important; }
+
+  .goldbowl-customer-header .goldbowl-header-actions,
+  .goldbowl-customer-header .branch-picker,
+  .goldbowl-customer-header .customer-login-button { display: none !important; }
+
+  .goldbowl-customer-header { height: 76px !important; min-height: 76px !important; padding: 8px 12px !important; }
+  .goldbowl-customer-header .goldbowl-brand { min-height: 58px !important; }
+  .goldbowl-customer-header .goldbowl-brand img {
+    width: 58px !important; height: 58px !important;
+    max-width: 58px !important; max-height: 58px !important;
+    flex: 0 0 58px !important;
+  }
+
+  .customer-popular,
+  .customer-more-grid,
+  .route-products,
+  .product-grid,
+  .products-grid,
+  .product-list-grid,
+  .menu-product-grid,
+  .search-product-grid,
+  .food-grid,
+  .product-cards-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    width: 100% !important;
+    gap: 10px !important;
+  }
+
+  .customer-food-card,
+  .explore-product-card,
+  .route-product,
+  .product-card { width: 100% !important; min-width: 0 !important; max-width: none !important; }
+}
