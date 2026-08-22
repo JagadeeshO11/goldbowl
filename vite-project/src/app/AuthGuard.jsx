@@ -4,15 +4,15 @@ export function CustomerAuthGuard(){
   const location = useLocation()
   const authenticated = sessionStorage.getItem('bowlCustomerAuth') === '1'
   const relativePath = location.pathname.replace(/^\/customer\/?/, '') || 'home'
-
-  // Browsing is public. Authentication is required only when the customer
-  // enters an account/order flow or any other protected customer destination.
   const publicPrefixes = ['home', 'search', 'categories', 'offers', 'product/']
   const isPublic = publicPrefixes.some(prefix => relativePath === prefix || relativePath.startsWith(prefix))
 
   if(authenticated || isPublic) return <Outlet />
 
+  // Remember exactly what the customer was trying to do. The sign-in page
+  // can complete normally and the home page will restore this destination.
   const from = `${location.pathname}${location.search}${location.hash}`
+  sessionStorage.setItem('bowlCustomerPendingRedirect', from)
   return <Navigate to={`/customer/signin?redirect=${encodeURIComponent(from)}`} replace state={{ from }} />
 }
 
