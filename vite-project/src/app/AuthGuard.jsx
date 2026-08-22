@@ -1,13 +1,19 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 
 export function CustomerAuthGuard(){
-  const existing=sessionStorage.getItem('bowlCustomerLocation')
-  if(!existing){
-    const defaultLoc={name:'Madhapur',state:'Hyderabad',label:'Madhapur, Hyderabad',latitude:17.4483,longitude:78.3915}
-    sessionStorage.setItem('bowlCustomerLocation',JSON.stringify(defaultLoc))
-    sessionStorage.setItem('bowlCustomerAuth','1')
-  }
-  return <Outlet/>
+  const location = useLocation()
+  const authenticated = sessionStorage.getItem('bowlCustomerAuth') === '1'
+  const relativePath = location.pathname.replace(/^\/customer\/?/, '') || 'home'
+
+  // Browsing is public. Authentication is required only when the customer
+  // enters an account/order flow or any other protected customer destination.
+  const publicPrefixes = ['home', 'search', 'categories', 'offers', 'product/']
+  const isPublic = publicPrefixes.some(prefix => relativePath === prefix || relativePath.startsWith(prefix))
+
+  if(authenticated || isPublic) return <Outlet />
+
+  const from = `${location.pathname}${location.search}${location.hash}`
+  return <Navigate to={`/customer/signin?redirect=${encodeURIComponent(from)}`} replace state={{ from }} />
 }
 
 export function DeliveryAuthGuard(){
