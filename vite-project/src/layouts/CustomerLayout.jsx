@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
-import { Home, ClipboardList, ShoppingCart, Tag, Menu, MapPin, ChevronDown, UserRound, Check, X, Wifi, BatteryCharging } from 'lucide-react'
+import { Home, ClipboardList, ShoppingCart, Tag, Menu, MapPin, ChevronDown, UserRound, Check, X, Wifi, BatteryCharging, LogIn } from 'lucide-react'
 import { branches as mockBranches } from '../data/mockData'
 import '../styles/customer-polish.css'
 import '../customer-panel-enhancements.css'
@@ -34,10 +34,12 @@ export function CustomerLayout() {
 }
 
 export function CustomerHeader({ onProfile }) {
+  const navigate = useNavigate()
   const [open, setOpen] = useState(false)
   const [selectedBranch, setSelectedBranch] = useState(() => {
     try { const stored = sessionStorage.getItem('bowlCustomerBranch'); return stored ? JSON.parse(stored) : mockBranches[0] } catch { return mockBranches[0] }
   })
+  const isLoggedIn = sessionStorage.getItem('bowlCustomerAuth') === '1'
   const handleSelectBranch = (b) => { setSelectedBranch(b); sessionStorage.setItem('bowlCustomerBranch', JSON.stringify(b)); setOpen(false) }
 
   return (
@@ -48,7 +50,11 @@ export function CustomerHeader({ onProfile }) {
           <NavLink to="/customer/home" className="goldbowl-brand" aria-label="Golden Food Bowl home"><img src={BOWL_LOGO} alt="Golden Food Bowl"/><div className="brand-title-wrap"><strong className="header-company-name">GOLDEN FOOD BOWL</strong><span className="header-company-tagline">Fresh • Tasty • Fast</span></div></NavLink>
           <div className="goldbowl-header-actions">
             <button type="button" className="branch-picker" aria-label="Select branch" onClick={() => setOpen(true)}><MapPin size={16} fill="currentColor"/><span>{selectedBranch?.name?.replace(' Bowl', '') || 'Select Branch'}</span><ChevronDown size={15}/></button>
-            <button type="button" className="profile-button" aria-label="Profile" onClick={onProfile}><UserRound size={23}/></button>
+            {!isLoggedIn ? (
+              <button type="button" className="customer-login-button" aria-label="Customer sign in" onClick={() => navigate('/customer/signin')}><LogIn size={17}/><span>Login</span></button>
+            ) : (
+              <button type="button" className="profile-button" aria-label="Profile" onClick={onProfile}><UserRound size={23}/></button>
+            )}
           </div>
         </header>
       </div>
