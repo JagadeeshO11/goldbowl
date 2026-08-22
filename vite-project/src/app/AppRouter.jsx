@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { CustomerLayout } from '../layouts/CustomerLayout'
 import { DeliveryLayout } from '../layouts/DeliveryLayout'
 import { AdminLayout } from '../layouts/AdminLayout'
@@ -15,19 +15,11 @@ import { AdminSignInPage } from '../pages/admin/AdminSignInPage'
 import { SupportSignInPage } from '../pages/support/SupportSignInPage'
 import { CustomerAuthGuard, DeliveryAuthGuard, AdminAuthGuard, SupportAuthGuard } from './AuthGuard'
 
-function CustomerEntryRedirect(){
-  const location = useLocation()
-  const hasAuth = sessionStorage.getItem('bowlCustomerAuth') === '1'
-  if(hasAuth) return <Navigate to="/customer/home" replace />
-  const from = `${location.pathname}${location.search}${location.hash}`
-  return <Navigate to={`/customer/signin?redirect=${encodeURIComponent(from)}`} replace />
-}
-
 export function AppRouter() {
   return <Routes>
-    {/* Root opens Customer Sign In for logged-out visitors, preserving the requested destination. */}
-    <Route path="/" element={<CustomerEntryRedirect />} />
-    <Route path="/customer/auth" element={<Navigate to="/customer/signin" replace />} />
+    {/* Customer website is browsable without login. Login is requested when an order/account flow needs it. */}
+    <Route path="/" element={<GoldenCustomerHome />} />
+    <Route path="/customer/auth" element={<Navigate to="/customer/home" replace />} />
     <Route path="/customer/signin" element={<CustomerSignInPage />} />
     <Route path="/customer/signup" element={<CustomerSignUpPage />} />
     <Route path="/customer/verify-otp" element={<CustomerVerifyOtpPage />} />
