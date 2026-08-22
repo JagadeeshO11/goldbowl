@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { CustomerLayout } from '../layouts/CustomerLayout'
 import { DeliveryLayout } from '../layouts/DeliveryLayout'
 import { AdminLayout } from '../layouts/AdminLayout'
@@ -15,11 +15,19 @@ import { AdminSignInPage } from '../pages/admin/AdminSignInPage'
 import { SupportSignInPage } from '../pages/support/SupportSignInPage'
 import { CustomerAuthGuard, DeliveryAuthGuard, AdminAuthGuard, SupportAuthGuard } from './AuthGuard'
 
+function CustomerEntryRedirect(){
+  const location = useLocation()
+  const hasAuth = sessionStorage.getItem('bowlCustomerAuth') === '1'
+  if(hasAuth) return <Navigate to="/customer/home" replace />
+  const from = `${location.pathname}${location.search}${location.hash}`
+  return <Navigate to={`/customer/signin?redirect=${encodeURIComponent(from)}`} replace />
+}
+
 export function AppRouter() {
   return <Routes>
-    {/* Root is the public Customer Sign In page. The old role-selection landing page is removed from the entry route. */}
-    <Route path="/" element={<CustomerSignInPage />} />
-    <Route path="/customer/auth" element={<Navigate to="/customer" replace />} />
+    {/* Root opens Customer Sign In for logged-out visitors, preserving the requested destination. */}
+    <Route path="/" element={<CustomerEntryRedirect />} />
+    <Route path="/customer/auth" element={<Navigate to="/customer/signin" replace />} />
     <Route path="/customer/signin" element={<CustomerSignInPage />} />
     <Route path="/customer/signup" element={<CustomerSignUpPage />} />
     <Route path="/customer/verify-otp" element={<CustomerVerifyOtpPage />} />
@@ -46,6 +54,6 @@ export function AppRouter() {
     <Route path="/support/signin" element={<SupportSignInPage />} />
     <Route path="/support/login" element={<SupportSignInPage />} />
     <Route path="/support" element={<SupportAuthGuard />}><Route element={<SupportLayout />}><Route index element={<Navigate to="dashboard" replace />} /><Route path="*" element={<SupportPageV3 />} /></Route></Route>
-    <Route path="*" element={<Navigate to="/customer" replace />} />
+    <Route path="*" element={<Navigate to="/" replace />} />
   </Routes>
 }
