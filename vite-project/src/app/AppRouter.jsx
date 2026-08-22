@@ -1,4 +1,4 @@
-import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom'
 import { CustomerLayout } from '../layouts/CustomerLayout'
 import { DeliveryLayout } from '../layouts/DeliveryLayout'
 import { AdminLayout } from '../layouts/AdminLayout'
@@ -34,7 +34,6 @@ function CustomerBrowseGuard(){
 // After login the existing sign-in page goes to /customer/home. If checkout
 // was the reason for login, continue the customer to checkout automatically.
 function CustomerHomeEntry(){
-  const navigate = useNavigate()
   const authenticated = sessionStorage.getItem('bowlCustomerAuth') === '1'
   if(authenticated){
     const pending = sessionStorage.getItem('bowlCustomerPendingRedirect')
