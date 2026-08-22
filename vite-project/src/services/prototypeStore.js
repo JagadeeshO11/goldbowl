@@ -38,10 +38,36 @@ let state = loadState(); const listeners = new Set()
 function persist() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); listeners.forEach((listener) => listener(state)) }
 
 export const orderStatuses = ['CONFIRMED','PREPARING','READY_FOR_PICKUP','ASSIGNED','PICKED_UP','OUT_FOR_DELIVERY','DELIVERED']
+export const deliveryStatusFlow = {
+  CONFIRMED: 'PREPARING',
+  PREPARING: 'READY_FOR_PICKUP',
+  READY_FOR_PICKUP: 'ASSIGNED',
+  ASSIGNED: 'PICKED_UP',
+  PICKED_UP: 'OUT_FOR_DELIVERY',
+  OUT_FOR_DELIVERY: 'DELIVERED',
+  DELIVERED: null,
+}
+export function getNextOrderStatus(status) { return deliveryStatusFlow[status] ?? null }
 export function getState() { return state }
 export function subscribe(listener) { listeners.add(listener); return () => listeners.delete(listener) }
 export function createOrder(order) { const id = `BWL${Math.floor(10000 + Math.random() * 90000)}`; const newOrder = { id, status: 'CONFIRMED', createdAt: new Date().toISOString(), ...order }; state = { ...state, orders: [newOrder, ...state.orders] }; addNotification('admin','New order received',`${id} has been placed.`); addNotification('support','New order to monitor',`${id} needs monitoring.`); persist(); return newOrder }
-export function updateOrderStatus(orderId, status) { state = { ...state, orders: state.orders.map((order) => order.id === orderId ? { ...order, status } : order) }; addNotification('customer','Order updated',`${orderId} is now ${status.replaceAll('_',' ').toLowerCase()}.`); persist() }
+export function updateOrderStatus(orderId, status) {
+  if (!orderId || !orderStatuses.includes(status)) return false
+  const order = state.orders.find((item) => item.id === orderId)
+  if (!order || order.status === status) return false
+  state = { ...state, orders: state.orders.map((item) => item.id === orderId ? { ...item, status } : item) }
+  addNotification('customer','Order updated',`${orderId} is now ${status.replaceAll('_',' ').toLowerCase()}.`)
+  persist()
+  return true
+}
+export function advanceOrderStatus(orderId) {
+  const order = state.orders.find((item) => item.id === orderId)
+  if (!order) return null
+  const next = getNextOrderStatus(order.status)
+  if (!next) return order
+  updateOrderStatus(orderId, next)
+  return { ...order, status: next }
+}
 export function assignDelivery(orderId, driver) { state = { ...state, orders: state.orders.map((order) => order.id === orderId ? { ...order, driver, status: 'ASSIGNED' } : order) }; addNotification('delivery','New delivery assigned',`Order ${orderId} is ready for pickup.`); persist() }
 export function addNotification(role, title, message) { state = { ...state, notifications: [{ id: makeId(), role, title, message, createdAt: new Date().toISOString() }, ...state.notifications] } }
 export function duplicateBranch(sourceId, newBranch) { const source = state.branches.find((branch) => branch.id === Number(sourceId)); const id = Math.max(...state.branches.map((branch) => Number(branch.id)), 0) + 1; const branch = { id, ...newBranch, menuCopiedFrom: source?.name }; state = { ...state, branches: [...state.branches, branch] }; addNotification('admin','Branch duplicated',`${branch.name} copied the menu from ${source?.name ?? 'the selected branch'}.`); persist(); return branch }
