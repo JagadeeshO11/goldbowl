@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import { CustomerLayout } from '../layouts/CustomerLayout'
 import { DeliveryLayout } from '../layouts/DeliveryLayout'
 import { AdminLayout } from '../layouts/AdminLayout'
@@ -13,11 +13,42 @@ import { DeliveryPartnerSignInPage } from '../pages/auth/DeliveryPartnerSignInPa
 import { DeliveryLocationPage } from '../pages/auth/DeliveryLocationPage'
 import { AdminSignInPage } from '../pages/admin/AdminSignInPage'
 import { SupportSignInPage } from '../pages/support/SupportSignInPage'
-import { CustomerAuthGuard, DeliveryAuthGuard, AdminAuthGuard, SupportAuthGuard } from './AuthGuard'
+import { DeliveryAuthGuard, AdminAuthGuard, SupportAuthGuard } from './AuthGuard'
+
+// Customer browsing is public. Login is required only when the customer
+// reaches checkout, while the cart remains available to guests.
+function CustomerBrowseGuard(){
+  const location = useLocation()
+  const authenticated = sessionStorage.getItem('bowlCustomerAuth') === '1'
+  const relativePath = location.pathname.replace(/^\/customer\/?/, '') || 'home'
+  const protectedPrefixes = ['checkout', 'payment', 'profile', 'orders', 'track', 'notifications']
+  const isProtected = protectedPrefixes.some(prefix => relativePath === prefix || relativePath.startsWith(prefix + '/'))
+
+  if(authenticated || !isProtected) return <Outlet />
+
+  const from = `${location.pathname}${location.search}${location.hash}`
+  sessionStorage.setItem('bowlCustomerPendingRedirect', from)
+  return <Navigate to={`/customer/signin?redirect=${encodeURIComponent(from)}`} replace state={{ from }} />
+}
+
+// After login the existing sign-in page goes to /customer/home. If checkout
+// was the reason for login, continue the customer to checkout automatically.
+function CustomerHomeEntry(){
+  const navigate = useNavigate()
+  const authenticated = sessionStorage.getItem('bowlCustomerAuth') === '1'
+  if(authenticated){
+    const pending = sessionStorage.getItem('bowlCustomerPendingRedirect')
+    if(pending){
+      sessionStorage.removeItem('bowlCustomerPendingRedirect')
+      return <Navigate to={pending} replace />
+    }
+  }
+  return <GoldenCustomerHome />
+}
 
 export function AppRouter() {
   return <Routes>
-    {/* Customer website opens on the home page. Login is requested when ordering/account access needs it. */}
+    {/* Customer website opens on the home page. */}
     <Route path="/" element={<Navigate to="/customer/home" replace />} />
     <Route path="/customer/auth" element={<Navigate to="/customer/home" replace />} />
     <Route path="/customer/signin" element={<CustomerSignInPage />} />
@@ -25,10 +56,10 @@ export function AppRouter() {
     <Route path="/customer/verify-otp" element={<CustomerVerifyOtpPage />} />
     <Route path="/customer/forgot-password" element={<CustomerForgotPasswordPage />} />
     <Route path="/customer/location" element={<CustomerLocationPage />} />
-    <Route path="/customer" element={<CustomerAuthGuard />}>
+    <Route path="/customer" element={<CustomerBrowseGuard />}>
       <Route element={<CustomerLayout />}>
-        <Route index element={<GoldenCustomerHome />} />
-        <Route path="home" element={<GoldenCustomerHome />} />
+        <Route index element={<CustomerHomeEntry />} />
+        <Route path="home" element={<CustomerHomeEntry />} />
         <Route path="*" element={<CustomerPage />} />
       </Route>
     </Route>
