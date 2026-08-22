@@ -1,4 +1,8 @@
 /* Final customer mobile overrides. Loaded after all existing customer CSS. */
+/* Checkout: branch selection is intentionally hidden. Delivery address remains visible. */
+.checkout-page .route-mobile-body .route-card { display:none !important; }
+.checkout-page .route-mobile-body h2:nth-of-type(3) + .route-card { display:flex !important; }
+
 @media (max-width: 700px) {
   .mobile-status-bar,.status-bar,.status-bar-left,.status-bar-right,.network-type,.battery-indicator,.charging-icon{display:none!important;height:0!important;min-height:0!important;padding:0!important;margin:0!important;overflow:hidden!important}
   .goldbowl-top-header-group{padding-top:0!important;margin-top:0!important}
