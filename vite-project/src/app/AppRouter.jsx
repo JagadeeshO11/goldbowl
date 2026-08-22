@@ -17,8 +17,8 @@ import { CustomerAuthGuard, DeliveryAuthGuard, AdminAuthGuard, SupportAuthGuard 
 
 export function AppRouter() {
   return <Routes>
-    {/* Customer website is browsable without login. Login is requested when an order/account flow needs it. */}
-    <Route path="/" element={<GoldenCustomerHome />} />
+    {/* Customer website opens on the home page. Login is requested when ordering/account access needs it. */}
+    <Route path="/" element={<Navigate to="/customer/home" replace />} />
     <Route path="/customer/auth" element={<Navigate to="/customer/home" replace />} />
     <Route path="/customer/signin" element={<CustomerSignInPage />} />
     <Route path="/customer/signup" element={<CustomerSignUpPage />} />
@@ -46,6 +46,6 @@ export function AppRouter() {
     <Route path="/support/signin" element={<SupportSignInPage />} />
     <Route path="/support/login" element={<SupportSignInPage />} />
     <Route path="/support" element={<SupportAuthGuard />}><Route element={<SupportLayout />}><Route index element={<Navigate to="dashboard" replace />} /><Route path="*" element={<SupportPageV3 />} /></Route></Route>
-    <Route path="*" element={<Navigate to="/" replace />} />
+    <Route path="*" element={<Navigate to="/customer/home" replace />} />
   </Routes>
 }
