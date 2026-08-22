@@ -21,6 +21,17 @@ function ExploreCard({ product, onAdd }) {
 
 export function GoldenCustomerHome() {
   const navigate = useNavigate(); const [selected, setSelected] = React.useState('all'); const [query, setQuery] = React.useState(''); const [slide, setSlide] = React.useState(0)
+
+  // After authentication, return the customer to the action that required login
+  // instead of dropping them back at the home page.
+  React.useEffect(() => {
+    if (sessionStorage.getItem('bowlCustomerAuth') !== '1') return
+    const pending = sessionStorage.getItem('bowlCustomerPendingRedirect')
+    if (!pending || pending === '/customer/home' || pending === '/') return
+    sessionStorage.removeItem('bowlCustomerPendingRedirect')
+    navigate(pending, { replace: true })
+  }, [navigate])
+
   React.useEffect(() => { const timer = window.setInterval(() => setSlide(current => (current + 1) % heroSlides.length), 4500); return () => window.clearInterval(timer) }, [])
   const visibleCategories = [{ id: 'all', name: 'All', icon: '🍲' }, ...categories]; const currentHero = heroSlides[slide]; const heroProduct = products.find(product => product.id === currentHero.productId) || products[0]
   const addToCart = product => { const key = 'goldbowl_cart'; let cart = []; try { cart = JSON.parse(localStorage.getItem(key)) || [] } catch (err) { if (err) cart = [] }; const existing = cart.find(item => item.productId === product.id); const next = existing ? cart.map(item => item.productId === product.id ? { ...item, quantity: item.quantity + 1 } : item) : [...cart, { productId: product.id, quantity: 1 }]; localStorage.setItem(key, JSON.stringify(next)); navigate('/customer/cart') }
