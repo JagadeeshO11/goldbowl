@@ -1,4 +1,5 @@
-import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom'
+import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import '../styles/customer-final-overrides.css'
 import { CustomerLayout } from '../layouts/CustomerLayout'
 import { DeliveryLayout } from '../layouts/DeliveryLayout'
 import { AdminLayout } from '../layouts/AdminLayout'
@@ -15,24 +16,18 @@ import { AdminSignInPage } from '../pages/admin/AdminSignInPage'
 import { SupportSignInPage } from '../pages/support/SupportSignInPage'
 import { DeliveryAuthGuard, AdminAuthGuard, SupportAuthGuard } from './AuthGuard'
 
-// Customer browsing is public. Login is required only when the customer
-// reaches checkout, while the cart remains available to guests.
 function CustomerBrowseGuard(){
   const location = useLocation()
   const authenticated = sessionStorage.getItem('bowlCustomerAuth') === '1'
   const relativePath = location.pathname.replace(/^\/customer\/?/, '') || 'home'
   const protectedPrefixes = ['checkout', 'payment', 'profile', 'orders', 'track', 'notifications']
   const isProtected = protectedPrefixes.some(prefix => relativePath === prefix || relativePath.startsWith(prefix + '/'))
-
   if(authenticated || !isProtected) return <Outlet />
-
   const from = `${location.pathname}${location.search}${location.hash}`
   sessionStorage.setItem('bowlCustomerPendingRedirect', from)
   return <Navigate to={`/customer/signin?redirect=${encodeURIComponent(from)}`} replace state={{ from }} />
 }
 
-// After login the existing sign-in page goes to /customer/home. If checkout
-// was the reason for login, continue the customer to checkout automatically.
 function CustomerHomeEntry(){
   const authenticated = sessionStorage.getItem('bowlCustomerAuth') === '1'
   if(authenticated){
@@ -47,7 +42,6 @@ function CustomerHomeEntry(){
 
 export function AppRouter() {
   return <Routes>
-    {/* Customer website opens on the home page. */}
     <Route path="/" element={<Navigate to="/customer/home" replace />} />
     <Route path="/customer/auth" element={<Navigate to="/customer/home" replace />} />
     <Route path="/customer/signin" element={<CustomerSignInPage />} />
