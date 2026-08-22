@@ -2,6 +2,7 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { Home, ClipboardList, ShoppingCart, Tag, Menu, UserRound } from 'lucide-react'
 import '../styles/customer-polish.css'
 import '../customer-panel-enhancements.css'
+import '../customer-mobile-final.css'
 
 const BOWL_LOGO = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787120716/image-removebg-preview_e1wfil.png'
 
@@ -26,7 +27,6 @@ export function CustomerLayout() {
 }
 
 export function CustomerHeader({ onProfile }) {
-  const navigate = useNavigate()
   return (
     <div className="goldbowl-top-header-group">
       <header className="goldbowl-customer-header">
