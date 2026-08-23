@@ -21,6 +21,7 @@ import { DeliveryNavigationPage } from '../pages/delivery/DeliveryNavigationPage
 import { DeliveryGigsPage } from '../pages/delivery/DeliveryGigsPage'
 import { DeliveryWalletPage } from '../pages/delivery/DeliveryWalletPage'
 import { DeliveryProfilePage } from '../pages/delivery/DeliveryProfilePage'
+import { DeliveryNotificationsPage } from '../pages/delivery/DeliveryNotificationsPage'
 import { SupportPageV3 } from '../pages/support/SupportPageV3'
 import { CustomerSignUpPage, CustomerSignInPage, CustomerVerifyOtpPage, CustomerForgotPasswordPage, CustomerLocationPage, DeliverySignUpPage, DeliveryVerificationPage, DeliveryFeePage, DeliveryApplicationSubmittedPage } from '../pages/auth/AuthPages'
 import { DeliveryPartnerSignInPage } from '../pages/auth/DeliveryPartnerSignInPage'
@@ -108,7 +109,7 @@ export function AppRouter() {
         <Route path="gigs" element={<DeliveryGigsPage />} />
         <Route path="wallet" element={<DeliveryWalletPage />} />
         <Route path="profile" element={<DeliveryProfilePage />} />
-        <Route path="notifications" element={<DeliveryDashboardPage />} />
+        <Route path="notifications" element={<DeliveryNotificationsPage />} />
       </Route>
     </Route>
     <Route path="/admin/signin" element={<AdminSignInPage />} />
