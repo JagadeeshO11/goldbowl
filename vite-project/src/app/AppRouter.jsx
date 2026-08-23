@@ -131,7 +131,12 @@ export function AppRouter() {
     </Route>
     <Route path="/support/signin" element={<SupportSignInPage />} />
     <Route path="/support/login" element={<SupportSignInPage />} />
-    <Route path="/support" element={<SupportAuthGuard />}><Route element={<SupportLayout />}><Route index element={<Navigate to="dashboard" replace />} /><Route path="*" element={<SupportPageV3 />} /></Route>
+    <Route path="/support" element={<SupportAuthGuard />}>
+      <Route element={<SupportLayout />}>
+        <Route index element={<Navigate to="dashboard" replace />} />
+        <Route path="*" element={<SupportPageV3 />} />
+      </Route>
+    </Route>
     <Route path="*" element={<Navigate to="/customer/home" replace />} />
   </Routes>
 }
