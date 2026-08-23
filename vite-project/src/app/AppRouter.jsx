@@ -23,6 +23,12 @@ import { DeliveryWalletPage } from '../pages/delivery/DeliveryWalletPage'
 import { DeliveryProfilePage } from '../pages/delivery/DeliveryProfilePage'
 import { DeliveryNotificationsPage } from '../pages/delivery/DeliveryNotificationsPage'
 import { SupportPageV3 } from '../pages/support/SupportPageV3'
+import { SupportDashboardPage } from '../pages/support/SupportDashboardPage'
+import { SupportOrdersPage } from '../pages/support/SupportOrdersPage'
+import { SupportProductsPage } from '../pages/support/SupportProductsPage'
+import { SupportIssuesPage } from '../pages/support/SupportIssuesPage'
+import { SupportAgentsPage } from '../pages/support/SupportAgentsPage'
+import { SupportNotificationsPage } from '../pages/support/SupportNotificationsPage'
 import { CustomerSignUpPage, CustomerSignInPage, CustomerVerifyOtpPage, CustomerForgotPasswordPage, CustomerLocationPage, DeliverySignUpPage, DeliveryVerificationPage, DeliveryFeePage, DeliveryApplicationSubmittedPage } from '../pages/auth/AuthPages'
 import { DeliveryPartnerSignInPage } from '../pages/auth/DeliveryPartnerSignInPage'
 import { DeliveryLocationPage } from '../pages/auth/DeliveryLocationPage'
@@ -134,7 +140,12 @@ export function AppRouter() {
     <Route path="/support" element={<SupportAuthGuard />}>
       <Route element={<SupportLayout />}>
         <Route index element={<Navigate to="dashboard" replace />} />
-        <Route path="*" element={<SupportPageV3 />} />
+        <Route path="dashboard" element={<SupportDashboardPage />} />
+        <Route path="orders" element={<SupportOrdersPage />} />
+        <Route path="products" element={<SupportProductsPage />} />
+        <Route path="issues" element={<SupportIssuesPage />} />
+        <Route path="agents" element={<SupportAgentsPage />} />
+        <Route path="notifications" element={<SupportNotificationsPage />} />
       </Route>
     </Route>
     <Route path="*" element={<Navigate to="/customer/home" replace />} />
