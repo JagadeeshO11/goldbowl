@@ -1,4 +1,4 @@
-import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom'
 import '../styles/customer-final-overrides.css'
 import { CustomerLayout } from '../layouts/CustomerLayout'
 import { DeliveryLayout } from '../layouts/DeliveryLayout'
@@ -7,7 +7,6 @@ import { SupportLayout } from '../layouts/SupportLayout'
 import { CustomerPage } from '../pages/customer/CustomerPage'
 import { GoldenCustomerHome } from '../pages/customer/GoldenCustomerHome'
 import { DeliveryPage } from '../pages/delivery/DeliveryPage'
-import { AdminPage } from '../pages/admin/AdminPage'
 import { SupportPageV3 } from '../pages/support/SupportPageV3'
 import { CustomerSignUpPage, CustomerSignInPage, CustomerVerifyOtpPage, CustomerForgotPasswordPage, CustomerLocationPage, DeliverySignUpPage, DeliveryVerificationPage, DeliveryFeePage, DeliveryApplicationSubmittedPage } from '../pages/auth/AuthPages'
 import { DeliveryPartnerSignInPage } from '../pages/auth/DeliveryPartnerSignInPage'
@@ -15,6 +14,16 @@ import { DeliveryLocationPage } from '../pages/auth/DeliveryLocationPage'
 import { AdminSignInPage } from '../pages/admin/AdminSignInPage'
 import { SupportSignInPage } from '../pages/support/SupportSignInPage'
 import { DeliveryAuthGuard, AdminAuthGuard, SupportAuthGuard } from './AuthGuard'
+import { DashboardPage } from '../pages/admin/DashboardPage'
+import { OrdersPage } from '../pages/admin/OrdersPage'
+import { ProductsPage } from '../pages/admin/ProductsPage'
+import { CategoriesPage } from '../pages/admin/CategoriesPage'
+import { BranchesPage } from '../pages/admin/BranchesPage'
+import { CustomersPage } from '../pages/admin/CustomersPage'
+import { DeliveryPage as AdminDeliveryPage } from '../pages/admin/DeliveryPage'
+import { SupportPage as AdminSupportPage } from '../pages/admin/SupportPage'
+import { ReportsPage } from '../pages/admin/ReportsPage'
+import { NotificationsPage } from '../pages/admin/NotificationsPage'
 
 function CustomerBrowseGuard(){
   const location = useLocation()
@@ -66,7 +75,21 @@ export function AppRouter() {
     <Route path="/delivery" element={<DeliveryAuthGuard />}><Route element={<DeliveryLayout />}><Route index element={<Navigate to="dashboard" replace />} /><Route path="*" element={<DeliveryPage />} /></Route></Route>
     <Route path="/admin/signin" element={<AdminSignInPage />} />
     <Route path="/admin/login" element={<AdminSignInPage />} />
-    <Route path="/admin" element={<AdminAuthGuard />}><Route element={<AdminLayout />}><Route index element={<Navigate to="dashboard" replace />} /><Route path="*" element={<AdminPage />} /></Route></Route>
+    <Route path="/admin" element={<AdminAuthGuard />}>
+      <Route element={<AdminLayout />}>
+        <Route index element={<Navigate to="dashboard" replace />} />
+        <Route path="dashboard" element={<DashboardPage />} />
+        <Route path="orders" element={<OrdersPage />} />
+        <Route path="products" element={<ProductsPage />} />
+        <Route path="categories" element={<CategoriesPage />} />
+        <Route path="branches" element={<BranchesPage />} />
+        <Route path="customers" element={<CustomersPage />} />
+        <Route path="delivery" element={<AdminDeliveryPage />} />
+        <Route path="support" element={<AdminSupportPage />} />
+        <Route path="reports" element={<ReportsPage />} />
+        <Route path="notifications" element={<NotificationsPage />} />
+      </Route>
+    </Route>
     <Route path="/support/signin" element={<SupportSignInPage />} />
     <Route path="/support/login" element={<SupportSignInPage />} />
     <Route path="/support" element={<SupportAuthGuard />}><Route element={<SupportLayout />}><Route index element={<Navigate to="dashboard" replace />} /><Route path="*" element={<SupportPageV3 />} /></Route></Route>
