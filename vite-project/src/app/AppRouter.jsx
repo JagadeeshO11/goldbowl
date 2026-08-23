@@ -4,9 +4,23 @@ import { CustomerLayout } from '../layouts/CustomerLayout'
 import { DeliveryLayout } from '../layouts/DeliveryLayout'
 import { AdminLayout } from '../layouts/AdminLayout'
 import { SupportLayout } from '../layouts/SupportLayout'
-import { CustomerPage } from '../pages/customer/CustomerPage'
 import { GoldenCustomerHome } from '../pages/customer/GoldenCustomerHome'
-import { DeliveryPage } from '../pages/delivery/DeliveryPage'
+import { CustomerHomePage } from '../pages/customer/CustomerHomePage'
+import { CustomerSearchPage } from '../pages/customer/CustomerSearchPage'
+import { CustomerOrdersPage } from '../pages/customer/CustomerOrdersPage'
+import { CustomerCartPage } from '../pages/customer/CustomerCartPage'
+import { CustomerCheckoutPage } from '../pages/customer/CustomerCheckoutPage'
+import { CustomerTrackingPage } from '../pages/customer/CustomerTrackingPage'
+import { CustomerProfilePage } from '../pages/customer/CustomerProfilePage'
+import { CustomerProductPage } from '../pages/customer/CustomerProductPage'
+import { CustomerCategoriesPage, CustomerPaymentPage, CustomerSuccessPage, CustomerNotificationsPage, CustomerOffersPage } from '../pages/customer/CustomerSecondaryPages'
+import { DeliveryDashboardPage } from '../pages/delivery/DeliveryDashboardPage'
+import { DeliveryOrdersPage } from '../pages/delivery/DeliveryOrdersPage'
+import { DeliveryOrderDetailsPage } from '../pages/delivery/DeliveryOrderDetailsPage'
+import { DeliveryNavigationPage } from '../pages/delivery/DeliveryNavigationPage'
+import { DeliveryGigsPage } from '../pages/delivery/DeliveryGigsPage'
+import { DeliveryWalletPage } from '../pages/delivery/DeliveryWalletPage'
+import { DeliveryProfilePage } from '../pages/delivery/DeliveryProfilePage'
 import { SupportPageV3 } from '../pages/support/SupportPageV3'
 import { CustomerSignUpPage, CustomerSignInPage, CustomerVerifyOtpPage, CustomerForgotPasswordPage, CustomerLocationPage, DeliverySignUpPage, DeliveryVerificationPage, DeliveryFeePage, DeliveryApplicationSubmittedPage } from '../pages/auth/AuthPages'
 import { DeliveryPartnerSignInPage } from '../pages/auth/DeliveryPartnerSignInPage'
@@ -62,7 +76,19 @@ export function AppRouter() {
       <Route element={<CustomerLayout />}>
         <Route index element={<CustomerHomeEntry />} />
         <Route path="home" element={<CustomerHomeEntry />} />
-        <Route path="*" element={<CustomerPage />} />
+        <Route path="search" element={<CustomerSearchPage />} />
+        <Route path="categories" element={<CustomerCategoriesPage />} />
+        <Route path="orders" element={<CustomerOrdersPage />} />
+        <Route path="orders/:id" element={<CustomerOrdersPage />} />
+        <Route path="product/:id" element={<CustomerProductPage />} />
+        <Route path="offers" element={<CustomerOffersPage />} />
+        <Route path="profile" element={<CustomerProfilePage />} />
+        <Route path="cart" element={<CustomerCartPage />} />
+        <Route path="checkout" element={<CustomerCheckoutPage />} />
+        <Route path="payment" element={<CustomerPaymentPage />} />
+        <Route path="order-success" element={<CustomerSuccessPage />} />
+        <Route path="track/:id" element={<CustomerTrackingPage />} />
+        <Route path="notifications" element={<CustomerNotificationsPage />} />
       </Route>
     </Route>
     <Route path="/delivery/onboarding" element={<Navigate to="/delivery/signup" replace />} />
@@ -72,7 +98,19 @@ export function AppRouter() {
     <Route path="/delivery/onboarding-fee" element={<DeliveryLocationPage />} />
     <Route path="/delivery/onboarding-fee/payment" element={<DeliveryFeePage />} />
     <Route path="/delivery/application-submitted" element={<DeliveryApplicationSubmittedPage />} />
-    <Route path="/delivery" element={<DeliveryAuthGuard />}><Route element={<DeliveryLayout />}><Route index element={<Navigate to="dashboard" replace />} /><Route path="*" element={<DeliveryPage />} /></Route></Route>
+    <Route path="/delivery" element={<DeliveryAuthGuard />}>
+      <Route element={<DeliveryLayout />}>
+        <Route index element={<Navigate to="dashboard" replace />} />
+        <Route path="dashboard" element={<DeliveryDashboardPage />} />
+        <Route path="orders" element={<DeliveryOrdersPage />} />
+        <Route path="orders/:id" element={<DeliveryOrderDetailsPage />} />
+        <Route path="navigation/:id" element={<DeliveryNavigationPage />} />
+        <Route path="gigs" element={<DeliveryGigsPage />} />
+        <Route path="wallet" element={<DeliveryWalletPage />} />
+        <Route path="profile" element={<DeliveryProfilePage />} />
+        <Route path="notifications" element={<DeliveryDashboardPage />} />
+      </Route>
+    </Route>
     <Route path="/admin/signin" element={<AdminSignInPage />} />
     <Route path="/admin/login" element={<AdminSignInPage />} />
     <Route path="/admin" element={<AdminAuthGuard />}>
@@ -92,7 +130,7 @@ export function AppRouter() {
     </Route>
     <Route path="/support/signin" element={<SupportSignInPage />} />
     <Route path="/support/login" element={<SupportSignInPage />} />
-    <Route path="/support" element={<SupportAuthGuard />}><Route element={<SupportLayout />}><Route index element={<Navigate to="dashboard" replace />} /><Route path="*" element={<SupportPageV3 />} /></Route></Route>
+    <Route path="/support" element={<SupportAuthGuard />}><Route element={<SupportLayout />}><Route index element={<Navigate to="dashboard" replace />} /><Route path="*" element={<SupportPageV3 />} /></Route>
     <Route path="*" element={<Navigate to="/customer/home" replace />} />
   </Routes>
 }
