@@ -1,0 +1,64 @@
+/* Keep the admin navigation pinned while the workspace scrolls independently. */
+@media (min-width: 701px) {
+  .desktop-app {
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    overflow: hidden !important;
+    display: flex !important;
+    align-items: stretch !important;
+  }
+
+  .desktop-app > .sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 250px !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    z-index: 100 !important;
+    box-sizing: border-box !important;
+    scrollbar-width: thin !important;
+  }
+
+  .desktop-app > .desktop-main {
+    margin-left: 250px !important;
+    width: calc(100% - 250px) !important;
+    min-width: 0 !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+    scroll-behavior: smooth !important;
+  }
+
+  .desktop-app > .desktop-main > .desktop-header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 50 !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .desktop-app {
+    min-height: 100dvh !important;
+    overflow: visible !important;
+  }
+
+  .desktop-app > .sidebar {
+    position: relative !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .desktop-app > .desktop-main {
+    margin-left: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+}
