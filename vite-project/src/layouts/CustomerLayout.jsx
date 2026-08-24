@@ -5,7 +5,7 @@ import '../customer-panel-enhancements.css'
 import '../customer-mobile-final.css'
 import '../customer-header-mobile.css'
 
-const BOWL_LOGO = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787120716/image-removebg-preview_e1wfil.png'
+const BOWL_LOGO = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787549201/cbeb6cd4-0196-43bf-850c-3a651219402c.png'
 
 export function MobileStatusBar() {
   return null
@@ -35,14 +35,6 @@ export function CustomerHeader({ onProfile }) {
       <header className="goldbowl-customer-header">
         <NavLink to="/customer/home" className="goldbowl-brand" aria-label="Golden Food Bowl home">
           <img src={BOWL_LOGO} alt="Golden Food Bowl"/>
-          <div className="brand-title-wrap">
-            <strong className="header-company-name" aria-label="Golden Food Bowl">
-              <span className="brand-word brand-word-golden">Golden</span>
-              <span className="brand-word brand-word-food">Food</span>
-              <span className="brand-word brand-word-bowl">Bowl</span>
-            </strong>
-            <span className="header-company-tagline">Fresh • Tasty • Fast</span>
-          </div>
         </NavLink>
         {sessionStorage.getItem('bowlCustomerAuth') === '1' && (
           <button type="button" className="profile-button" aria-label="Profile" onClick={onProfile}>
