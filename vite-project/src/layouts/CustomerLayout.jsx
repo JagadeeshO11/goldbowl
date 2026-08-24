@@ -35,7 +35,11 @@ export function CustomerHeader({ onProfile }) {
         <NavLink to="/customer/home" className="goldbowl-brand" aria-label="Golden Food Bowl home">
           <img src={BOWL_LOGO} alt="Golden Food Bowl"/>
           <div className="brand-title-wrap">
-            <strong className="header-company-name">GOLDEN FOOD BOWL</strong>
+            <strong className="header-company-name" aria-label="Golden Food Bowl">
+              <span className="brand-word brand-word-golden">Golden</span>
+              <span className="brand-word brand-word-food">Food</span>
+              <span className="brand-word brand-word-bowl">Bowl</span>
+            </strong>
             <span className="header-company-tagline">Fresh • Tasty • Fast</span>
           </div>
         </NavLink>
