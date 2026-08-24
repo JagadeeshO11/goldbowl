@@ -17,8 +17,6 @@ const batchBadges = product => [
   product.sugarFree && { key: 'sugarFree', text: '🚫🍬 Sugar Free' },
 ].filter(Boolean)
 
-const batchStyle = key => ({ display: 'inline-flex', alignItems: 'center', padding: '3px 6px', borderRadius: 999, background: key === 'sugarFree' ? '#fff1dc' : '#eaf8ed', color: key === 'sugarFree' ? '#9a5b00' : '#176d37', fontSize: 8.5, fontWeight: 900, whiteSpace: 'nowrap', boxShadow: '0 1px 3px rgba(0,0,0,.08)' })
-
 const getCardMeta = product => {
   const originalPrice = product.originalPrice || product.price + (Number(product.id) % 3 === 0 ? 120 : 100)
   const discount = Math.max(10, originalPrice - product.price)
@@ -29,7 +27,7 @@ const getCardMeta = product => {
 function CardBatches({ product }) {
   const badges = batchBadges(product)
   if (!badges.length) return null
-  return <div style={{ position: 'absolute', left: 8, top: 8, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 4, zIndex: 3 }}>{badges.map(item => <span key={item.key} style={batchStyle(item.key)}>{item.text}</span>)}</div>
+  return <div className="customer-card-batches">{badges.map(item => <span key={item.key} className={`customer-card-batch ${item.key}`}>{item.text}</span>)}</div>
 }
 
 function FoodCard({ product, onAdd }) {
@@ -71,12 +69,9 @@ function LocationBar({ vegOnly, setVegOnly }) {
     }, () => { setLocation('Unable to detect location'); setLoading(false) }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 300000 })
   }, [])
   React.useEffect(() => { if (!localStorage.getItem('goldbowl_current_location')) detectLocation() }, [detectLocation])
-  return <div className="customer-current-location" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-    <div className="customer-location-icon"><MapPin size={18} fill="currentColor" /></div><div className="customer-location-text"><span>Present Location</span><strong>{location}</strong></div>
-    <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 6 }}>
-      <button type="button" onClick={detectLocation} disabled={loading} aria-label="Detect present location" className="customer-location-refresh"><LocateFixed size={18}/></button>
-      <button type="button" onClick={() => setVegOnly(value => !value)} aria-pressed={vegOnly} aria-label="Show vegetarian food only" style={{ display: 'inline-flex', alignItems: 'center', gap: 5, height: 34, padding: '0 10px', borderRadius: 10, border: `1px solid ${vegOnly ? '#2e9b55' : '#d8cfbf'}`, background: vegOnly ? '#eaf8ed' : '#fff', color: vegOnly ? '#18713a' : '#706759', fontSize: 10.5, fontWeight: 900, cursor: 'pointer', whiteSpace: 'nowrap' }}><span style={{ width: 9, height: 9, borderRadius: '50%', background: '#35a853' }} /> Veg</button>
-    </div>
+  return <div className="customer-location-actions">
+    <div className="customer-current-location"><div className="customer-location-icon"><MapPin size={18} fill="currentColor" /></div><div className="customer-location-text"><span>Present Location</span><strong>{location}</strong></div><button type="button" onClick={detectLocation} disabled={loading} aria-label="Detect present location" className="customer-location-refresh"><LocateFixed size={18}/></button></div>
+    <button type="button" className={`customer-veg-toggle ${vegOnly ? 'active' : ''}`} onClick={() => setVegOnly(value => !value)} aria-pressed={vegOnly} aria-label="Veg only"><span className="customer-veg-dot" /> <span>Veg</span></button>
   </div>
 }
 
