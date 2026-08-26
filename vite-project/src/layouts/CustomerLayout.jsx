@@ -5,6 +5,7 @@ import '../styles/customer-polish.css'
 import '../customer-panel-enhancements.css'
 import '../customer-mobile-final.css'
 import '../customer-header-mobile.css'
+import '../customer-layout-final.css'
 
 const BOWL_LOGO = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787120716/image-removebg-preview_e1wfil.png'
 
