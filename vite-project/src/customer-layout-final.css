@@ -1,0 +1,53 @@
+/* Final customer shell/layout rules. Imported after all customer CSS. */
+
+/* The home page used to render the location row below the header. The live location control now lives in CustomerHeader. */
+.customer-home-body > .customer-location-actions { display:none !important; }
+
+/* Full viewport bottom navigation. Desktop prototype frame margins stop above this bar. */
+.customer-bottom-nav {
+  position: fixed !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  transform: none !important;
+  width: 100vw !important;
+  max-width: none !important;
+  min-width: 100vw !important;
+  height: 68px !important;
+  min-height: 68px !important;
+  box-sizing: border-box !important;
+  border-radius: 18px 18px 0 0 !important;
+  z-index: 99999 !important;
+}
+
+.customer-route-content {
+  padding-bottom: 82px !important;
+}
+
+/* On wide screens the app content can remain in its phone-width prototype, but the nav is always viewport-wide. */
+@media (min-width:701px) {
+  .customer-bottom-nav {
+    left: 0 !important;
+    right: 0 !important;
+    width: 100vw !important;
+    min-width: 100vw !important;
+  }
+}
+
+/* Keep the header's three columns stable: brand | location | profile. */
+.goldbowl-customer-header {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(105px, 150px) 38px !important;
+  align-items: center !important;
+  column-gap: 7px !important;
+}
+.goldbowl-customer-header .goldbowl-brand { min-width:0 !important; }
+.goldbowl-customer-header .customer-header-location { width:100% !important; max-width:150px !important; }
+
+@media (max-width:370px) {
+  .goldbowl-customer-header {
+    grid-template-columns: minmax(0,1fr) minmax(96px,112px) 34px !important;
+    column-gap: 5px !important;
+  }
+  .goldbowl-customer-header .customer-header-location { max-width:112px !important; }
+}
