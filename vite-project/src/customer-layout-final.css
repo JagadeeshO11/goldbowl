@@ -244,3 +244,56 @@
   .goldbowl-customer-header .customer-header-location-copy strong { font-size: 7px !important; }
   .goldbowl-customer-header .customer-header-location button { width: 21px !important; flex-basis: 21px !important; }
 }
+
+/* Reference-style ADD TO CART control for every Golden Bowl product card. */
+.customer-home-body .customer-reference-card {
+  position: relative !important;
+}
+
+.customer-home-body .customer-reference-add {
+  position: absolute !important;
+  left: 8px !important;
+  right: 8px !important;
+  top: auto !important;
+  bottom: 10px !important;
+  transform: none !important;
+  width: calc(100% - 16px) !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  padding: 0 10px !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  background: linear-gradient(180deg,#d5a326,#c38c0f) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 10px rgba(170,116,0,.22) !important;
+  font-size: 0 !important;
+  line-height: 1 !important;
+  font-weight: 900 !important;
+  letter-spacing: .2px !important;
+  white-space: nowrap !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  z-index: 12 !important;
+}
+
+.customer-home-body .customer-reference-add::after {
+  content: 'ADD TO CART' !important;
+  font-size: 12px !important;
+  line-height: 1 !important;
+  font-weight: 900 !important;
+  letter-spacing: .25px !important;
+  color: #fff !important;
+}
+
+.customer-home-body .customer-reference-add:active {
+  transform: scale(.98) !important;
+}
+
+.customer-home-body .customer-food-info,
+.customer-home-body .explore-product-body {
+  min-height: 190px !important;
+  padding-bottom: 58px !important;
+}
