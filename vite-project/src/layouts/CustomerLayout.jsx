@@ -4,6 +4,7 @@ import '../styles/customer-polish.css'
 import '../customer-panel-enhancements.css'
 import '../customer-mobile-final.css'
 import '../customer-header-mobile.css'
+import '../styles/customer-reference-mobile.css'
 
 const BOWL_LOGO = 'https://res.cloudinary.com/dwmjz9csc/image/upload/v1787120716/image-removebg-preview_e1wfil.png'
 
@@ -22,7 +23,7 @@ export function CustomerLayout() {
         <CustomerHeader onProfile={() => navigate('/customer/profile')} />
         <main className="mobile-route-content customer-route-content"><Outlet /></main>
         <nav className="customer-bottom-nav" aria-label="Customer navigation">
-          {links.map(([to,label,Icon]) => <NavLink key={to} to={`/customer/${to}`} className={({isActive}) => isActive ? 'active' : ''}><Icon size={23} strokeWidth={2.2}/><span>{label}</span></NavLink>)}
+          {links.map(([to,label,Icon]) => <NavLink key={to} to={`/customer/${to}`} end={to === 'home'} className={({isActive}) => isActive ? 'active' : ''}><Icon size={23} strokeWidth={2.2}/><span>{label}</span></NavLink>)}
         </nav>
       </div>
     </div>
