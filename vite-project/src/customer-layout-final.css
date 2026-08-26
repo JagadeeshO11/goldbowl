@@ -24,17 +24,7 @@
   padding-bottom: 82px !important;
 }
 
-/* On wide screens the app content can remain in its phone-width prototype, but the nav is always viewport-wide. */
-@media (min-width:701px) {
-  .customer-bottom-nav {
-    left: 0 !important;
-    right: 0 !important;
-    width: 100vw !important;
-    min-width: 100vw !important;
-  }
-}
-
-/* Keep the header's three columns stable: brand | location | profile. */
+/* Keep the header's three columns stable on the mobile viewport. */
 .goldbowl-customer-header {
   display: grid !important;
   grid-template-columns: minmax(0, 1fr) minmax(105px, 150px) 38px !important;
@@ -50,4 +40,176 @@
     column-gap: 5px !important;
   }
   .goldbowl-customer-header .customer-header-location { max-width:112px !important; }
+}
+
+/* Desktop: use the real browser viewport instead of rendering the customer site inside a phone frame. */
+@media (min-width:701px) {
+  .customer-prototype-frame {
+    width:100vw !important;
+    max-width:none !important;
+    min-width:0 !important;
+    height:100dvh !important;
+    min-height:100dvh !important;
+    margin:0 !important;
+    padding:0 0 68px !important;
+    display:block !important;
+    box-sizing:border-box !important;
+    overflow:hidden !important;
+    background:#f7f5ef !important;
+    box-shadow:none !important;
+  }
+
+  .customer-app-shell {
+    width:100% !important;
+    max-width:none !important;
+    min-width:0 !important;
+    height:100dvh !important;
+    min-height:100dvh !important;
+    margin:0 !important;
+    border:0 !important;
+    border-radius:0 !important;
+    box-shadow:none !important;
+    overflow:hidden !important;
+    background:#fff !important;
+  }
+
+  .customer-route-content {
+    width:100% !important;
+    max-width:none !important;
+    min-width:0 !important;
+    height:100% !important;
+    min-height:0 !important;
+    overflow-x:hidden !important;
+    overflow-y:auto !important;
+    box-sizing:border-box !important;
+    padding-bottom:82px !important;
+  }
+
+  /* Clean desktop header: brand | location | profile, with dedicated space for each. */
+  .goldbowl-customer-header {
+    width:100% !important;
+    height:92px !important;
+    min-height:92px !important;
+    padding:10px clamp(28px,5vw,72px) !important;
+    box-sizing:border-box !important;
+    display:grid !important;
+    grid-template-columns:minmax(250px,1fr) minmax(260px,420px) 48px !important;
+    align-items:center !important;
+    column-gap:28px !important;
+    background:#fff !important;
+    border-bottom:1px solid #eee5d5 !important;
+    position:sticky !important;
+    top:0 !important;
+    z-index:50 !important;
+    overflow:visible !important;
+  }
+
+  .goldbowl-customer-header .goldbowl-brand {
+    min-width:0 !important;
+    width:max-content !important;
+    max-width:100% !important;
+    height:72px !important;
+    display:flex !important;
+    align-items:center !important;
+    gap:10px !important;
+    overflow:visible !important;
+  }
+
+  .goldbowl-customer-header .goldbowl-brand img {
+    width:62px !important;
+    height:62px !important;
+    max-width:62px !important;
+    max-height:62px !important;
+    flex:0 0 62px !important;
+    object-fit:contain !important;
+  }
+
+  .goldbowl-customer-header .brand-title-wrap {
+    min-width:0 !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    justify-content:center !important;
+    padding:0 !important;
+    overflow:visible !important;
+  }
+
+  .goldbowl-customer-header .header-company-name {
+    width:max-content !important;
+    max-width:100% !important;
+    margin:0 !important;
+    padding:0 !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:flex-start !important;
+    font-family:Georgia,'Times New Roman',serif !important;
+    font-size:20px !important;
+    line-height:1.02 !important;
+    font-weight:900 !important;
+    letter-spacing:.2px !important;
+    white-space:nowrap !important;
+    color:#c99419 !important;
+  }
+
+  .goldbowl-customer-header .header-company-name .brand-word {
+    width:max-content !important;
+    margin-left:0 !important;
+    line-height:1.02 !important;
+  }
+  .goldbowl-customer-header .header-company-name .brand-word-food,
+  .goldbowl-customer-header .header-company-name .brand-word-bowl { margin-left:0 !important; }
+
+  .goldbowl-customer-header .header-company-tagline {
+    margin:5px 0 0 !important;
+    font-size:8px !important;
+    line-height:1 !important;
+    font-weight:900 !important;
+    letter-spacing:1.15px !important;
+    white-space:nowrap !important;
+    color:#9b6c12 !important;
+  }
+
+  .goldbowl-customer-header .customer-header-location,
+  .goldbowl-customer-header .customer-current-location {
+    width:100% !important;
+    max-width:none !important;
+    min-width:0 !important;
+    box-sizing:border-box !important;
+    justify-self:center !important;
+    overflow:hidden !important;
+  }
+
+  .goldbowl-customer-header .customer-header-location > *,
+  .goldbowl-customer-header .customer-current-location > * {
+    min-width:0 !important;
+  }
+
+  .goldbowl-customer-header .profile-button {
+    width:44px !important;
+    height:44px !important;
+    flex:0 0 44px !important;
+    justify-self:end !important;
+    border-radius:13px !important;
+    border:1px solid #ead7ae !important;
+    background:linear-gradient(180deg,#fffdf7,#fff8e8) !important;
+    color:#8b6410 !important;
+  }
+
+  /* Desktop bottom navigation belongs to the browser viewport, not the app shell. */
+  .customer-bottom-nav {
+    position:fixed !important;
+    left:0 !important;
+    right:0 !important;
+    bottom:0 !important;
+    width:100vw !important;
+    min-width:100vw !important;
+    max-width:none !important;
+    height:68px !important;
+    min-height:68px !important;
+    margin:0 !important;
+    padding:5px 8px 7px !important;
+    box-sizing:border-box !important;
+    border-radius:0 !important;
+    z-index:99999 !important;
+  }
 }
