@@ -9,14 +9,14 @@
 /* Desktop preview keeps the existing 390px mobile viewport. */
 @media (min-width:701px) {
   .customer-bottom-nav {
-    position: fixed !important;
-    left: 50% !important;
-    right: auto !important;
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
     bottom: 0 !important;
-    transform: translateX(-50%) !important;
-    width: 390px !important;
-    min-width: 390px !important;
-    max-width: 390px !important;
+    transform: none !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
     height: 68px !important;
     min-height: 68px !important;
     box-sizing: border-box !important;
@@ -30,6 +30,29 @@
     z-index: 99999 !important;
   }
 
+  .customer-prototype-frame {
+    width: 100vw !important;
+    min-width: 100vw !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 12px 0 !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    overflow: hidden !important;
+  }
+
+  .customer-app-shell {
+    position: relative !important;
+    width: 430px !important;
+    min-width: 430px !important;
+    max-width: 430px !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
   /* Header follows the mobile UI proportions and stays inside the phone viewport. */
   .goldbowl-top-header-group {
     width: 100% !important;
@@ -40,6 +63,7 @@
 
   .goldbowl-customer-header {
     width: 100% !important;
+    max-width: 100% !important;
     height: 82px !important;
     min-height: 82px !important;
     box-sizing: border-box !important;
@@ -48,7 +72,7 @@
     align-items: center !important;
     justify-content: space-between !important;
     gap: 8px !important;
-    overflow: visible !important;
+    overflow: hidden !important;
   }
 
   .goldbowl-customer-header .goldbowl-brand {
@@ -60,7 +84,7 @@
     align-items: center !important;
     justify-content: flex-start !important;
     gap: 9px !important;
-    overflow: visible !important;
+    overflow: hidden !important;
   }
 
   .goldbowl-customer-header .goldbowl-brand img {
@@ -74,7 +98,7 @@
 
   .goldbowl-customer-header .brand-title-wrap {
     min-width: 0 !important;
-    overflow: visible !important;
+    overflow: hidden !important;
     display: flex !important;
     flex-direction: column !important;
     align-items: flex-start !important;
@@ -88,6 +112,7 @@
     align-items: flex-start !important;
     justify-content: center !important;
     width: max-content !important;
+    max-width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
     font-family: Georgia, 'Times New Roman', serif !important;
