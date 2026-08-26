@@ -1,25 +1,40 @@
 /* Single-row search + Veg filter. */
 .customer-home-body > .customer-location-actions {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  align-items: center !important;
-  justify-content: flex-start !important;
-  gap: 8px !important;
-  width: 100% !important;
-  margin: 0 0 10px !important;
-  padding: 0 !important;
-  box-sizing: border-box !important;
+  display: contents !important;
 }
 .customer-home-body > .customer-location-actions .customer-current-location { display: none !important; }
-.customer-home-body > .customer-location-actions .customer-veg-toggle {
-  order: 2 !important;
-  width: 30% !important;
+.customer-home-body {
+  display: grid !important;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 3fr) !important;
+  column-gap: 8px !important;
+  row-gap: 10px !important;
+  align-items: center !important;
+}
+.customer-home-body > .customer-search {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  order: 1 !important;
+  display: flex !important;
+  width: 100% !important;
+  max-width: none !important;
   min-width: 0 !important;
-  max-width: 30% !important;
   height: 46px !important;
   min-height: 46px !important;
-  flex: 0 0 30% !important;
+  margin: 0 !important;
+  padding: 0 11px !important;
+  border-radius: 11px !important;
+  box-sizing: border-box !important;
+}
+.customer-home-body > .customer-location-actions .customer-veg-toggle {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  order: 2 !important;
+  justify-self: stretch !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  height: 46px !important;
+  min-height: 46px !important;
   margin: 0 !important;
   padding: 0 10px !important;
   border-radius: 11px !important;
@@ -29,26 +44,26 @@
   box-sizing: border-box !important;
   white-space: nowrap !important;
 }
-.customer-home-body > .customer-search {
-  order: 1 !important;
-  display: flex !important;
-  flex: 0 0 calc(70% - 8px) !important;
-  width: calc(70% - 8px) !important;
-  max-width: calc(70% - 8px) !important;
-  min-width: 0 !important;
-  height: 46px !important;
-  min-height: 46px !important;
-  margin: 0 !important;
-  padding: 0 11px !important;
-  border-radius: 11px !important;
-  box-sizing: border-box !important;
-}
 .customer-home-body > .customer-search svg:first-child { width: 20px !important; height: 20px !important; flex: 0 0 20px !important; }
 .customer-home-body > .customer-search svg:last-child { width: 18px !important; height: 18px !important; flex: 0 0 18px !important; }
 .customer-home-body > .customer-search input { min-width: 0 !important; width: 100% !important; font-size: 12px !important; }
+
+/* Everything after the controls remains full width. */
+.customer-home-body > .customer-categories,
+.customer-home-body > .customer-hero,
+.customer-home-body > .customer-section-title,
+.customer-home-body > .customer-popular,
+.customer-home-body > .customer-more-section,
+.customer-home-body > .customer-empty-state,
+.customer-home-body > .customer-benefits {
+  grid-column: 1 / -1 !important;
+}
+.customer-home-body > .customer-more-section .customer-more-title,
+.customer-home-body > .customer-more-section .customer-more-grid { grid-column: 1 / -1 !important; }
+
 @media (max-width: 390px) {
-  .customer-home-body > .customer-location-actions { gap: 7px !important; }
-  .customer-home-body > .customer-location-actions .customer-veg-toggle { width: 30% !important; max-width: 30% !important; flex-basis: 30% !important; height: 46px !important; min-height: 46px !important; padding: 0 7px !important; font-size: 11px !important; }
-  .customer-home-body > .customer-search { flex-basis: calc(70% - 7px) !important; width: calc(70% - 7px) !important; max-width: calc(70% - 7px) !important; height: 46px !important; min-height: 46px !important; }
+  .customer-home-body { grid-template-columns: minmax(0, 7fr) minmax(0, 3fr) !important; column-gap: 7px !important; row-gap: 8px !important; }
+  .customer-home-body > .customer-search { height: 46px !important; min-height: 46px !important; padding: 0 10px !important; }
+  .customer-home-body > .customer-location-actions .customer-veg-toggle { height: 46px !important; min-height: 46px !important; padding: 0 7px !important; font-size: 11px !important; }
   .customer-home-body > .customer-search input { font-size: 11px !important; }
 }
